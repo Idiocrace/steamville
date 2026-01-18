@@ -1,0 +1,10 @@
+{
+    "id": "low_pressure_steam",
+    "name": "Low Pressure Steam",
+    "unit": "L(s)",
+    "unitFull": "litre(s)",
+    "sprite": "low_pressure_steam.png",
+    "color": "#333333",
+    "types": [],
+    "value": 0
+}

@@ -1,0 +1,10 @@
+{
+    "id": "steam",
+    "name": "Steam",
+    "unit": "L(s)",
+    "unitFull": "litre(s)",
+    "sprite": "steam.png",
+    "color": "#333333",
+    "types": [],
+    "value": 0
+}

@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "qBOTt4GTVe4=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\jessj\\Downloads\\TileGame\\TileGame.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\jessj\\.nuget\\packages\\imgui.net\\1.91.6.1\\imgui.net.1.91.6.1.nupkg.sha512",
+    "C:\\Users\\jessj\\.nuget\\packages\\sdl2-cs\\2.0.0\\sdl2-cs.2.0.0.nupkg.sha512",
+    "C:\\Users\\jessj\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
+    "C:\\Users\\jessj\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
+    "C:\\Users\\jessj\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

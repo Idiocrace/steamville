@@ -1,0 +1,12 @@
+{
+    "id": "water",
+    "name": "Water",
+    "unit": "L(s)",
+    "unitFull": "litre(s)",
+    "sprite": "water.png",
+    "color": "#333333",
+    "types": [
+        "importable"
+    ],
+    "value": 0.05
+}

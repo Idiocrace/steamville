@@ -1,0 +1,12 @@
+{
+    "id": "electricity",
+    "name": "Electricity",
+    "unit": "kWh(s)",
+    "unitFull": "kilowatt-hour(s)",
+    "sprite": "electricity.png",
+    "color": "#ffff00",
+    "types": [
+        "exportable"
+    ],
+    "value": 0.2
+}

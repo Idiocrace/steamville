@@ -1,0 +1,12 @@
+{
+    "id": "coal",
+    "name": "Coal",
+    "unit": "kg(s)",
+    "unitFull": "kilogram(s)",
+    "sprite": "coal.png",
+    "color": "#333333",
+    "types": [
+        "importable"
+    ],
+    "value": 0.1
+}
