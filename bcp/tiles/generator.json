@@ -27,7 +27,8 @@
             ]
         }
     },
-    "machine": {
+    "processor": "machine",
+    "processorData": {
         "consumption": {
             "case1": {
                 "container0": {

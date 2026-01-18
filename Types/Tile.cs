@@ -154,6 +154,71 @@ public class Tile
                 break;
         }
 
+        // Parse processorData (optional) into the structure expected by processors
+        if (root.TryGetProperty("processorData", out var pdEl) && pdEl.ValueKind == System.Text.Json.JsonValueKind.Object)
+        {
+            var processorData = new Dictionary<object, object>();
+
+            // Helper to parse a cases object (consumption/production)
+            void ParseCases(System.Text.Json.JsonElement casesEl, Dictionary<string, Dictionary<object, object>> dst)
+            {
+                foreach (var caseProp in casesEl.EnumerateObject())
+                {
+                    var caseDict = new Dictionary<object, object>();
+                    var caseObj = caseProp.Value;
+                    if (caseObj.ValueKind == System.Text.Json.JsonValueKind.Object)
+                    {
+                        foreach (var contProp in caseObj.EnumerateObject())
+                        {
+                            var spec = new Dictionary<object, object>();
+                            spec["container"] = contProp.Name; // e.g. "container0"
+
+                            // Parse resources map (resourceId -> amount) into Dictionary<Resource,int>
+                            var resDict = new Dictionary<Resource, int>();
+                            if (contProp.Value.ValueKind == System.Text.Json.JsonValueKind.Object)
+                            {
+                                foreach (var resProp in contProp.Value.EnumerateObject())
+                                {
+                                    string resId = resProp.Name;
+                                    int amount = 0;
+                                    if (resProp.Value.ValueKind == System.Text.Json.JsonValueKind.Number && resProp.Value.TryGetInt32(out var a)) amount = a;
+                                    else if (resProp.Value.ValueKind == System.Text.Json.JsonValueKind.String && int.TryParse(resProp.Value.GetString(), out var ai)) amount = ai;
+
+                                    var resource = TileGame.Resources.FirstOrDefault(r => r.ID == resId);
+                                    if (resource == null)
+                                    {
+                                        throw new ArgumentException($"Unknown resource '{resId}' in processorData.");
+                                    }
+
+                                    resDict[resource] = amount;
+                                }
+                            }
+
+                            spec["resources"] = resDict;
+                            caseDict[contProp.Name] = spec;
+                        }
+                    }
+                    dst[caseProp.Name] = caseDict;
+                }
+            }
+
+            if (pdEl.TryGetProperty("consumption", out var consEl) && consEl.ValueKind == System.Text.Json.JsonValueKind.Object)
+            {
+                var consCases = new Dictionary<string, Dictionary<object, object>>();
+                ParseCases(consEl, consCases);
+                processorData["consumption"] = consCases;
+            }
+
+            if (pdEl.TryGetProperty("production", out var prodEl) && prodEl.ValueKind == System.Text.Json.JsonValueKind.Object)
+            {
+                var prodCases = new Dictionary<string, Dictionary<object, object>>();
+                ParseCases(prodEl, prodCases);
+                processorData["production"] = prodCases;
+            }
+
+            tile.ProcessorData = processorData;
+        }
+
         return tile;
     }
 }

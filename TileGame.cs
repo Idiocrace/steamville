@@ -76,7 +76,13 @@ public class TileGame
             throw new DirectoryNotFoundException("BCP directory not found.");
         }
         Console.WriteLine("Initializing TileMap and PipeMap...");
-        // Load tiles and resources into global runtime lists
+        // Load resources and tiles into global runtime lists
+        Resources = LoadResources(BaseContentPackDir);
+        foreach (Resource resource in Resources)
+        {
+            Console.WriteLine("Loaded Resource: " + resource.ID);
+        }
+
         Tiles = LoadTiles(BaseContentPackDir);
         lock (GameLock)
         {
@@ -84,11 +90,6 @@ public class TileGame
             {
                 Console.WriteLine("Loaded Tile: " + tile.ID);
             }
-        }
-        Resources = LoadResources(BaseContentPackDir);
-        foreach (Resource resource in Resources)
-        {
-            Console.WriteLine("Loaded Resource: " + resource.ID);
         }
         Console.WriteLine("Initializing bits and bobs...");
         int Money = 0; // Player's money
