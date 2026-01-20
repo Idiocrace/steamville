@@ -1,18 +1,20 @@
 {
   "version": 2,
-  "dgSpecHash": "8qG/wQTV66c=",
+  "dgSpecHash": "KKHqERn4ylY=",
   "success": true,
-  "projectFilePath": "C:\\Users\\harve\\Downloads\\steamville\\TileGame.csproj",
+  "projectFilePath": "C:\\Users\\Harvey Jass\\Downloads\\steamville\\TileGame.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\harve\\.nuget\\packages\\imgui.net\\1.91.6.1\\imgui.net.1.91.6.1.nupkg.sha512",
-    "C:\\Users\\harve\\.nuget\\packages\\sdl2-cs\\2.0.0\\sdl2-cs.2.0.0.nupkg.sha512",
-    "C:\\Users\\harve\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
-    "C:\\Users\\harve\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
-    "C:\\Users\\harve\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
-    "C:\\Users\\harve\\.nuget\\packages\\microsoft.netcore.app.ref\\9.0.12\\microsoft.netcore.app.ref.9.0.12.nupkg.sha512",
-    "C:\\Users\\harve\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\9.0.12\\microsoft.windowsdesktop.app.ref.9.0.12.nupkg.sha512",
-    "C:\\Users\\harve\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\9.0.12\\microsoft.aspnetcore.app.ref.9.0.12.nupkg.sha512",
-    "C:\\Users\\harve\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\9.0.12\\microsoft.netcore.app.host.win-x64.9.0.12.nupkg.sha512"
+    "C:\\Users\\Harvey Jass\\.nuget\\packages\\csfml\\3.0.0\\csfml.3.0.0.nupkg.sha512",
+    "C:\\Users\\Harvey Jass\\.nuget\\packages\\imgui.net\\1.91.6.1\\imgui.net.1.91.6.1.nupkg.sha512",
+    "C:\\Users\\Harvey Jass\\.nuget\\packages\\sdl2-cs\\2.0.0\\sdl2-cs.2.0.0.nupkg.sha512",
+    "C:\\Users\\Harvey Jass\\.nuget\\packages\\sfml.audio\\3.0.0\\sfml.audio.3.0.0.nupkg.sha512",
+    "C:\\Users\\Harvey Jass\\.nuget\\packages\\sfml.graphics\\3.0.0\\sfml.graphics.3.0.0.nupkg.sha512",
+    "C:\\Users\\Harvey Jass\\.nuget\\packages\\sfml.net\\3.0.0\\sfml.net.3.0.0.nupkg.sha512",
+    "C:\\Users\\Harvey Jass\\.nuget\\packages\\sfml.system\\3.0.0\\sfml.system.3.0.0.nupkg.sha512",
+    "C:\\Users\\Harvey Jass\\.nuget\\packages\\sfml.window\\3.0.0\\sfml.window.3.0.0.nupkg.sha512",
+    "C:\\Users\\Harvey Jass\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
+    "C:\\Users\\Harvey Jass\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
+    "C:\\Users\\Harvey Jass\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
   ],
   "logs": []
 }

@@ -91,6 +91,9 @@ public class TileGame
                 Console.WriteLine("Loaded Tile: " + tile.ID);
             }
         }
+        Console.WriteLine("Loading configurations...");
+        
+
         Console.WriteLine("Initializing bits and bobs...");
         int Money = 0; // Player's money
 
