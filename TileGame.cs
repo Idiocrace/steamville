@@ -1,5 +1,5 @@
-﻿using System.Threading;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+
 using TileGame.Types;
 using TileGame.Processors;
 using TileGame.Processors.Pipes;
@@ -148,16 +148,8 @@ public class TileGame
                 }
                 else
                 {
-                    // Fallback to dynamic invocation for unknown processors
-                    try
-                    {
-                        dynamic proc = tile.Processor;
-                        proc.Process(tile);
-                    }
-                    catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException)
-                    {
-                        // Ignore if the processor has a different signature
-                    }
+                    // Throw a content pack error
+                    throw new ContentPackError($"Unknown processor type for tile at {position.X},{position.Y}");
                 }
             }
             catch (Exception ex)
@@ -224,7 +216,7 @@ public class TileGame
             // Simple periodic status output every second
             if (tickCounter >= TickRate && Graphics.CurrentState == GameState.Playing)
             {
-                Console.WriteLine($"Tick rate steady: {TickRate} ticks/sec (processed {tickCounter} ticks)");
+                FlushConsoleOutput();
                 tickCounter = 0;
             }
 
