@@ -1,8 +1,9 @@
-﻿using System.Threading;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+
 using TileGame.Types;
 using TileGame.Processors;
 using TileGame.Processors.Pipes;
+using TileGame.Errors;
 
 namespace TileGame;
 
@@ -17,6 +18,30 @@ public class TileGame
     private static readonly object GameLock = new object();
     private static bool Running = true;
     private static readonly int TickRate = 20; // ticks per second
+    private static List<string> ConsoleOutputBuffer = [];
+
+    public static void FlushConsoleOutput()
+    {
+        lock (GameLock)
+        {
+            foreach (string message in ConsoleOutputBuffer)
+            {
+                Console.WriteLine(message);
+            }
+            ConsoleOutputBuffer.Clear();
+        }
+    }
+
+    public static void WriteConsole(string message)
+    {
+        lock (GameLock)
+        {
+            if (!ConsoleOutputBuffer.Contains(message))
+            {
+                ConsoleOutputBuffer.Add(message);
+            }
+        }
+    }
 
     public static List<Tile> LoadTiles(string bcpDir)
     {
@@ -144,16 +169,8 @@ public class TileGame
                 }
                 else
                 {
-                    // Fallback to dynamic invocation for unknown processors
-                    try
-                    {
-                        dynamic proc = tile.Processor;
-                        proc.Process(tile);
-                    }
-                    catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException)
-                    {
-                        // Ignore if the processor has a different signature
-                    }
+                    // Throw a content pack error
+                    throw new ContentPackError($"Unknown processor type for tile at {position.X},{position.Y}");
                 }
             }
             catch (Exception ex)
@@ -214,10 +231,10 @@ public class TileGame
                 tickCounter++;
             }
 
-            // Simple periodic status output every second
+            // Flush console every second
             if (tickCounter >= TickRate)
             {
-                Console.WriteLine($"Tick rate steady: {TickRate} ticks/sec (processed {tickCounter} ticks)");
+                FlushConsoleOutput();
                 tickCounter = 0;
             }
 
