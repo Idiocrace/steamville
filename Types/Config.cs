@@ -1,11 +1,9 @@
-using Microsoft.VisualBasic;
-
 namespace TileGame.Types;
 
 // I think this is the only class that has an internal reference to its serialize method
 public class Config
 {
-    private Dictionary<string, object?> settings = new Dictionary<string, object?>();
+    private readonly Dictionary<string, object?> settings = [];
 
     public T GetSetting<T>(string key, T defaultValue = default!)
     {

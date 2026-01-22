@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Diagnostics;
 using TileGame.Types;
+using TileGame.Processors;
 using TileGame.Processors.Pipes;
 
 namespace TileGame;
@@ -9,12 +10,13 @@ namespace TileGame;
 public class TileGame
 {
     // Global runtime state
-    public static List<Tile> Tiles = new List<Tile>();
-    public static List<Pipe> Pipes = new List<Pipe>();
-    public static List<Resource> Resources = new List<Resource>();
-    public static object GameLock = new object();
-    public static bool Running = true;
-    public static int TickRate = 20; // ticks per second
+    public static TileGrid MainGrid = new TileGrid();
+    public static List<Tile> Tiles = [];
+    public static List<Pipe> Pipes = [];
+    public static List<Resource> Resources = [];
+    private static readonly object GameLock = new object();
+    private static bool Running = true;
+    private static readonly int TickRate = 20; // ticks per second
 
     public static List<Tile> LoadTiles(string bcpDir)
     {
@@ -91,7 +93,6 @@ public class TileGame
                 Console.WriteLine("Loaded Tile: " + tile.ID);
             }
         }
-        Console.WriteLine("Loading configurations...");
         
 
         Console.WriteLine("Initializing bits and bobs...");
@@ -107,22 +108,57 @@ public class TileGame
 
     public static void ProcessAllTiles()
     {
-        List<Tile> snapshot;
+        // Create a thread-safe snapshot of the grid so processing doesn't hold the game lock
+        Dictionary<Vector2, Tile> snapshot;
         lock (GameLock)
         {
-            snapshot = Tiles.ToList();
+            snapshot = MainGrid.GetAllTiles().ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
 
-        foreach (Tile tile in snapshot)
+        foreach (KeyValuePair<Vector2, Tile> kvp in snapshot)
         {
+            Vector2 position = kvp.Key;
+            Tile tile = kvp.Value;
             try
             {
-                dynamic proc = tile.Processor;
-                proc.Process(tile);
+                // Dispatch to concrete processor implementations
+                if (tile.Processor is MachineProcessor machine)
+                {
+                    // Build adjacent map with string directions expected by processors
+                    var adjByPos = MainGrid.GetAdjacentTiles(position);
+                    var adj = new Dictionary<string, Tile>();
+                    var leftPos = new Vector2(position.X - 1, position.Y);
+                    var rightPos = new Vector2(position.X + 1, position.Y);
+                    var upPos = new Vector2(position.X, position.Y - 1);
+                    var downPos = new Vector2(position.X, position.Y + 1);
+                    if (adjByPos.TryGetValue(leftPos, out var left)) adj["left"] = left;
+                    if (adjByPos.TryGetValue(rightPos, out var right)) adj["right"] = right;
+                    if (adjByPos.TryGetValue(upPos, out var up)) adj["up"] = up;
+                    if (adjByPos.TryGetValue(downPos, out var down)) adj["down"] = down;
+
+                    machine.Process(tile, adj);
+                }
+                else if (tile.Processor is BaseProcessor baseProcessor)
+                {
+                    baseProcessor.Process(tile);
+                }
+                else
+                {
+                    // Fallback to dynamic invocation for unknown processors
+                    try
+                    {
+                        dynamic proc = tile.Processor;
+                        proc.Process(tile);
+                    }
+                    catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException)
+                    {
+                        // Ignore if the processor has a different signature
+                    }
+                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error processing tile '{tile.ID}': {ex.Message}");
+                Console.WriteLine($"Error processing tile at {position.X},{position.Y}: {ex.Message}");
             }
         }
     }

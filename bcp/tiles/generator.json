@@ -19,12 +19,6 @@
             "filter": [
                 "electricity"
             ]
-        },
-        "container3": {
-            "capacity": 60,
-            "filter": [
-                "low_pressure_steam"
-            ]
         }
     },
     "processor": "machine",
@@ -45,17 +39,11 @@
             "case1": {
                 "container2": {
                     "electricity": 100
-                },
-                "container3": {
-                    "low_pressure_steam": 10
                 }
             },
             "case2": {
                 "container2": {
                     "electricity": 250
-                },
-                "container3": {
-                    "low_pressure_steam": 20
                 }
             }
         }

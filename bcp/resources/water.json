@@ -4,7 +4,7 @@
     "unit": "L(s)",
     "unitFull": "litre(s)",
     "sprite": "water.png",
-    "color": "#333333",
+    "color": "#0000ff",
     "types": [
         "importable"
     ],

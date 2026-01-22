@@ -1,0 +1,12 @@
+{
+    "id": "enriched_uranium",
+    "name": "Enriched Uranium",
+    "unit": "kg",
+    "unitFull": "kilogram(s)",
+    "sprite": "enriched_uranium.png",
+    "color": "#00ff00",
+    "types": [
+        "exportable"
+    ],
+    "value": 300
+}

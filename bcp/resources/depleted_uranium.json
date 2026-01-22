@@ -1,0 +1,12 @@
+{
+    "id": "depleted_uranium",
+    "name": "Depleted Uranium",
+    "unit": "kg",
+    "unitFull": "kilogram(s)",
+    "sprite": "depleted_uranium.png",
+    "color": "#ff0000",
+    "types": [
+        "exportable"
+    ],
+    "value": -0.02
+}

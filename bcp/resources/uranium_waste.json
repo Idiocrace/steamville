@@ -1,0 +1,10 @@
+{
+    "id": "uranium_waste",
+    "name": "Uranium Waste",
+    "unit": "kg",
+    "unitFull": "kilogram(s)",
+    "sprite": "uranium_waste.png",
+    "color": "#ff0000",
+    "types": [ ],
+    "value": 0
+}

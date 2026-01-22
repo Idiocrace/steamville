@@ -61,7 +61,7 @@ public class Resource
             throw new ArgumentException("Resource JSON data must contain an 'id' field.");
         }
 
-        List<string> fields = new() { "id", "name", "unit", "unitFull", "sprite", "color", "types", "value" };
+        List<string> fields = ["id", "name", "unit", "unitFull", "sprite", "color", "types", "value"];
 
         // Check for unexpected fields and list them explicitly
         var unexpected = root.EnumerateObject().Select(p => p.Name).Where(n => !fields.Contains(n)).ToList();

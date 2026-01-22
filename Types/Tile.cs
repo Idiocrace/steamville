@@ -11,7 +11,7 @@ public class Tile
     public required Vector2 BoundingBox { get; set; } = new Vector2(1, 1); // width,height
     public Vector3 Position { get; set; } = new Vector3(0, 0, 0); // x,y,rotation
     // Containers are the most complicated part of tiles due to the amount of specificity needed
-    public required Dictionary<string, Container> TileContainers { get; set; } = new Dictionary<string, Container>();
+    public required Dictionary<string, Container> TileContainers { get; set; } = [];
     public required Dictionary<object, object> ProcessorData { get; set; } = [];
 
     // Parameterless constructor initializes all required members so `new Tile()` is valid.
@@ -22,7 +22,7 @@ public class Tile
         DisplayName = "Base Tile";
         BoundingBox = new Vector2(1, 1);
         Position = new Vector3(0, 0, 0);
-        TileContainers = new Dictionary<string, Container>();
+        TileContainers = [];
         ProcessorData = [];
     }
 
@@ -35,8 +35,8 @@ public class Tile
             DisplayName = displayName,
             BoundingBox = boundingBox,
             Position = position,
-            TileContainers = new Dictionary<string, Container>(),
-            ProcessorData = new Dictionary<object, object>()
+            TileContainers = [],
+            ProcessorData = []
         };
     }
 
@@ -65,7 +65,7 @@ public class Tile
             {
                 containerDict.Remove("contents");
             }
-            containerData[containerEntry.Key] = containerDict ?? new Dictionary<string, object>();
+            containerData[containerEntry.Key] = containerDict ?? [];
         }
         data["containers"] = containerData;
         data["processor"] = Processor.ProcessorIDLiteral;
@@ -113,8 +113,8 @@ public class Tile
             Processor = new Processors.BaseProcessor(),
             DisplayName = displayName,
             BoundingBox = new Vector2(width, height),
-            TileContainers = new Dictionary<string, Container>(),
-            ProcessorData = new Dictionary<object, object>()
+            TileContainers = [],
+            ProcessorData = []
         };
 
         // Parse containers (capacity + optional filter list)
@@ -170,8 +170,10 @@ public class Tile
                     {
                         foreach (var contProp in caseObj.EnumerateObject())
                         {
-                            var spec = new Dictionary<object, object>();
-                            spec["container"] = contProp.Name; // e.g. "container0"
+                            var spec = new Dictionary<object, object>
+                            {
+                                ["container"] = contProp.Name // e.g. "container0"
+                            };
 
                             // Parse resources map (resourceId -> amount) into Dictionary<Resource,int>
                             var resDict = new Dictionary<Resource, int>();

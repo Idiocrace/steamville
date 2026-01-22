@@ -1,0 +1,10 @@
+{
+    "id": "raw_uranium",
+    "name": "Raw Uranium",
+    "unit": "kg",
+    "unitFull": "kilogram(s)",
+    "sprite": "raw_uranium.png",
+    "color": "#9abf2a",
+    "types": [],
+    "value": 150
+}

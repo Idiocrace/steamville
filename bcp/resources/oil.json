@@ -1,0 +1,12 @@
+{
+    "id": "oil",
+    "name": "Oil",
+    "unit": "L(s)",
+    "unitFull": "litre(s)",
+    "sprite": "oil.png",
+    "color": "#120217",
+    "types": [
+        "exportable"
+    ],
+    "value": 0.6
+}

@@ -1,0 +1,12 @@
+{
+    "id": "yellowcake",
+    "name": "Yellowcake Uranium",
+    "unit": "kg",
+    "unitFull": "kilogram(s)",
+    "sprite": "yellowcake.png",
+    "color": "#ffff00",
+    "types": [
+        "exportable"
+    ],
+    "value": 200
+}

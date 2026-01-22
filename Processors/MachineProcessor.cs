@@ -6,14 +6,15 @@ public class MachineProcessor : Processor
 {
     public static new readonly string ProcessorIDLiteral = "machine";
     private static bool processorLocked = false;
-    public void Process(dynamic tile)
+    private static readonly Dictionary<string, Tile> adjacentTiles = [];
+    public void Process(dynamic tile, Dictionary<string, Tile> adjacentTiles)
     {
         if (processorLocked)
         {
             return;
         }
 
-        if (!(tile.ProcessorData is Dictionary<object, object> data))
+        if (tile.ProcessorData is not Dictionary<object, object> data)
         {
             throw new ProcessorDataException("MachineProcessor requires ProcessorData as a dictionary.");
         }

@@ -1,0 +1,12 @@
+{
+    "id": "industrial_waste",
+    "name": "Industrial Waste",
+    "unit": "kg",
+    "unitFull": "kilogram(s)",
+    "sprite": "industrial_waste.png",
+    "color": "#05240a",
+    "types": [
+        "exportable"
+    ],
+    "value": 0.01
+}

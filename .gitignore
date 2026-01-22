@@ -1,0 +1,18 @@
+# Build outputs
+bin/
+obj/
+publish/
+out/
+
+# Rider/VS/VSCode/editor
+.vs/
+.vscode/
+.idea/
+
+# User and OS files
+*.user
+*.suo
+*.userosscache
+*.nupkg
+*.log
+*.DS_Store
