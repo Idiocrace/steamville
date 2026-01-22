@@ -462,174 +462,6 @@
           }
         }
       },
-      "Microsoft.NET.ILLink.Tasks/9.0.12": {
-        "type": "package",
-        "build": {
-          "build/Microsoft.NET.ILLink.Tasks.props": {}
-        }
-      },
-      "SDL2-CS/2.0.0": {
-        "type": "package"
-      },
-      "SFML.Audio/3.0.0": {
-        "type": "package",
-        "dependencies": {
-          "CSFML": "[3.0.0, 3.1.0)",
-          "SFML.System": "3.0.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/SFML.Audio.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.0/SFML.Audio.dll": {
-            "related": ".xml"
-          }
-        }
-      },
-      "SFML.Graphics/3.0.0": {
-        "type": "package",
-        "dependencies": {
-          "CSFML": "[3.0.0, 3.1.0)",
-          "SFML.System": "3.0.0",
-          "SFML.Window": "3.0.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/SFML.Graphics.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.0/SFML.Graphics.dll": {
-            "related": ".xml"
-          }
-        }
-      },
-      "SFML.Net/3.0.0": {
-        "type": "package",
-        "dependencies": {
-          "SFML.Audio": "3.0.0",
-          "SFML.Graphics": "3.0.0",
-          "SFML.System": "3.0.0",
-          "SFML.Window": "3.0.0"
-        }
-      },
-      "SFML.System/3.0.0": {
-        "type": "package",
-        "dependencies": {
-          "CSFML": "[3.0.0, 3.1.0)"
-        },
-        "compile": {
-          "lib/netstandard2.0/SFML.System.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.0/SFML.System.dll": {
-            "related": ".xml"
-          }
-        }
-      },
-      "SFML.Window/3.0.0": {
-        "type": "package",
-        "dependencies": {
-          "CSFML": "[3.0.0, 3.1.0)",
-          "SFML.System": "3.0.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/SFML.Window.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.0/SFML.Window.dll": {
-            "related": ".xml"
-          }
-        }
-      },
-      "System.Buffers/4.5.1": {
-        "type": "package",
-        "compile": {
-          "ref/netcoreapp2.0/_._": {}
-        },
-        "runtime": {
-          "lib/netcoreapp2.0/_._": {}
-        }
-      },
-      "System.Numerics.Vectors/4.5.0": {
-        "type": "package",
-        "compile": {
-          "ref/netcoreapp2.0/_._": {}
-        },
-        "runtime": {
-          "lib/netcoreapp2.0/_._": {}
-        }
-      },
-      "System.Runtime.CompilerServices.Unsafe/6.0.0": {
-        "type": "package",
-        "compile": {
-          "lib/net6.0/System.Runtime.CompilerServices.Unsafe.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net6.0/System.Runtime.CompilerServices.Unsafe.dll": {
-            "related": ".xml"
-          }
-        },
-        "build": {
-          "buildTransitive/netcoreapp3.1/_._": {}
-        }
-      }
-    },
-    "net9.0/win-x64": {
-      "CSFML/3.0.0": {
-        "type": "package",
-        "native": {
-          "runtimes/win-x64/native/csfml-audio.dll": {},
-          "runtimes/win-x64/native/csfml-graphics.dll": {},
-          "runtimes/win-x64/native/csfml-system.dll": {},
-          "runtimes/win-x64/native/csfml-window.dll": {},
-          "runtimes/win-x64/native/msvcp140.dll": {},
-          "runtimes/win-x64/native/sfml-audio-3.dll": {},
-          "runtimes/win-x64/native/sfml-graphics-3.dll": {},
-          "runtimes/win-x64/native/sfml-system-3.dll": {},
-          "runtimes/win-x64/native/sfml-window-3.dll": {},
-          "runtimes/win-x64/native/vcruntime140.dll": {},
-          "runtimes/win-x64/native/vcruntime140_1.dll": {}
-        },
-        "build": {
-          "build/netstandard2.0/_._": {}
-        }
-      },
-      "ImGui.NET/1.91.6.1": {
-        "type": "package",
-        "dependencies": {
-          "System.Buffers": "4.5.1",
-          "System.Numerics.Vectors": "4.5.0",
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
-        },
-        "compile": {
-          "lib/net8.0/ImGui.NET.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net8.0/ImGui.NET.dll": {
-            "related": ".xml"
-          }
-        },
-        "native": {
-          "runtimes/win-x64/native/cimgui.dll": {}
-        }
-      },
-      "Microsoft.NET.ILLink.Tasks/9.0.12": {
-        "type": "package",
-        "build": {
-          "build/Microsoft.NET.ILLink.Tasks.props": {}
-        }
-      },
       "SDL2-CS/2.0.0": {
         "type": "package"
       },
@@ -889,57 +721,6 @@
         "runtimes/win-x86/native/cimgui.dll"
       ]
     },
-    "Microsoft.NET.ILLink.Tasks/9.0.12": {
-      "sha512": "StA3kyImQHqDo8A8ZHaSxgASbEuT5UIqgeCvK5SzUPj//xE1QSys421J9pEs4cYuIVwq7CJvWSKxtyH7aPr1LA==",
-      "type": "package",
-      "path": "microsoft.net.illink.tasks/9.0.12",
-      "hasTools": true,
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "LICENSE.TXT",
-        "Sdk/Sdk.props",
-        "THIRD-PARTY-NOTICES.TXT",
-        "analyzers/dotnet/cs/ILLink.CodeFixProvider.dll",
-        "analyzers/dotnet/cs/ILLink.RoslynAnalyzer.dll",
-        "build/Microsoft.NET.ILLink.Analyzers.props",
-        "build/Microsoft.NET.ILLink.Tasks.props",
-        "build/Microsoft.NET.ILLink.targets",
-        "microsoft.net.illink.tasks.9.0.12.nupkg.sha512",
-        "microsoft.net.illink.tasks.nuspec",
-        "tools/net472/ILLink.Tasks.dll",
-        "tools/net472/ILLink.Tasks.dll.config",
-        "tools/net472/Mono.Cecil.Mdb.dll",
-        "tools/net472/Mono.Cecil.Pdb.dll",
-        "tools/net472/Mono.Cecil.Rocks.dll",
-        "tools/net472/Mono.Cecil.dll",
-        "tools/net472/Sdk/Sdk.props",
-        "tools/net472/System.Buffers.dll",
-        "tools/net472/System.Collections.Immutable.dll",
-        "tools/net472/System.Memory.dll",
-        "tools/net472/System.Numerics.Vectors.dll",
-        "tools/net472/System.Reflection.Metadata.dll",
-        "tools/net472/System.Runtime.CompilerServices.Unsafe.dll",
-        "tools/net472/build/Microsoft.NET.ILLink.Analyzers.props",
-        "tools/net472/build/Microsoft.NET.ILLink.Tasks.props",
-        "tools/net472/build/Microsoft.NET.ILLink.targets",
-        "tools/net9.0/ILLink.Tasks.deps.json",
-        "tools/net9.0/ILLink.Tasks.dll",
-        "tools/net9.0/Mono.Cecil.Mdb.dll",
-        "tools/net9.0/Mono.Cecil.Pdb.dll",
-        "tools/net9.0/Mono.Cecil.Rocks.dll",
-        "tools/net9.0/Mono.Cecil.dll",
-        "tools/net9.0/Sdk/Sdk.props",
-        "tools/net9.0/build/Microsoft.NET.ILLink.Analyzers.props",
-        "tools/net9.0/build/Microsoft.NET.ILLink.Tasks.props",
-        "tools/net9.0/build/Microsoft.NET.ILLink.targets",
-        "tools/net9.0/illink.deps.json",
-        "tools/net9.0/illink.dll",
-        "tools/net9.0/illink.runtimeconfig.json",
-        "useSharedDesignerContext.txt"
-      ]
-    },
     "SDL2-CS/2.0.0": {
       "sha512": "W7T4y+lMs7Wm/94dGggRxJYqxX5N6uuxuxw5ob/H34fnaoUwgoG0s+P7xzqsGXUc1cbCAjnShs21FdeFUnPlHA==",
       "type": "package",
@@ -1137,25 +918,24 @@
   "projectFileDependencyGroups": {
     "net9.0": [
       "ImGui.NET >= 1.91.6.1",
-      "Microsoft.NET.ILLink.Tasks >= 9.0.12",
       "SDL2-CS >= 2.0.0",
       "SFML.Net >= 3.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\harve\\.nuget\\packages\\": {}
+    "/Users/theodorecromwell/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\harve\\Downloads\\steamville\\TileGame.csproj",
+      "projectUniqueName": "/Users/theodorecromwell/Documents/Coding/steamville/TileGame.csproj",
       "projectName": "TileGame",
-      "projectPath": "C:\\Users\\harve\\Downloads\\steamville\\TileGame.csproj",
-      "packagesPath": "C:\\Users\\harve\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\harve\\Downloads\\steamville\\obj\\",
+      "projectPath": "/Users/theodorecromwell/Documents/Coding/steamville/TileGame.csproj",
+      "packagesPath": "/Users/theodorecromwell/.nuget/packages/",
+      "outputPath": "/Users/theodorecromwell/Documents/Coding/steamville/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\harve\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/Users/theodorecromwell/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -1179,7 +959,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "10.0.100"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net9.0": {
@@ -1188,12 +968,6 @@
           "ImGui.NET": {
             "target": "Package",
             "version": "[1.91.6.1, )"
-          },
-          "Microsoft.NET.ILLink.Tasks": {
-            "suppressParent": "All",
-            "target": "Package",
-            "version": "[9.0.12, )",
-            "autoReferenced": true
           },
           "SDL2-CS": {
             "target": "Package",
@@ -1215,47 +989,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[9.0.12, 9.0.12]"
-          },
-          {
-            "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
-            "version": "[9.0.12, 9.0.12]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[9.0.12, 9.0.12]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[9.0.12, 9.0.12]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Runtime.win-x64",
-            "version": "[9.0.12, 9.0.12]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[9.0.12, 9.0.12]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
-            "version": "[9.0.12, 9.0.12]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json"
-      }
-    },
-    "runtimes": {
-      "win-x64": {
-        "#import": []
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.310/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
