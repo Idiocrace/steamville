@@ -3,6 +3,7 @@ using System.Diagnostics;
 using TileGame.Types;
 using TileGame.Processors;
 using TileGame.Processors.Pipes;
+using TileGame.Graphics;
 
 namespace TileGame;
 
@@ -17,6 +18,9 @@ public class TileGame
     private static readonly object GameLock = new object();
     private static bool Running = true;
     private static readonly int TickRate = 20; // ticks per second
+    
+    // Graphics core
+    private static GraphicsCore? Graphics;
 
     public static List<Tile> LoadTiles(string bcpDir)
     {
@@ -195,7 +199,7 @@ public class TileGame
 
         const int maxCatchUpTicks = 5; // avoid spiral of death
 
-        while (Running)
+        while (Running && Graphics != null && Graphics.IsRunning)
         {
             var current = sw.Elapsed;
             var delta = current - previous;
@@ -205,9 +209,12 @@ public class TileGame
             int ticks = 0;
             while (accumulator >= tickDuration && ticks < maxCatchUpTicks)
             {
-                // Perform a single simulation tick
-                ProcessAllTiles();
-                ProcessAllPipes();
+                // Only process game logic if we're actually playing
+                if (Graphics.CurrentState == GameState.Playing)
+                {
+                    ProcessAllTiles();
+                    ProcessAllPipes();
+                }
 
                 accumulator -= tickDuration;
                 ticks++;
@@ -215,7 +222,7 @@ public class TileGame
             }
 
             // Simple periodic status output every second
-            if (tickCounter >= TickRate)
+            if (tickCounter >= TickRate && Graphics.CurrentState == GameState.Playing)
             {
                 Console.WriteLine($"Tick rate steady: {TickRate} ticks/sec (processed {tickCounter} ticks)");
                 tickCounter = 0;
@@ -228,20 +235,69 @@ public class TileGame
         Console.WriteLine("MainCycle exiting.");
     }
 
+    public static void RenderLoop()
+    {
+        if (Graphics == null) return;
+
+        while (Graphics.IsRunning)
+        {
+            // Handle window events
+            Graphics.PollEvents();
+
+            // Begin rendering
+            Graphics.BeginFrame();
+
+            // Handle different game states
+            if (Graphics.CurrentState == GameState.MainMenu)
+            {
+                Graphics.UpdateMenu();
+                Graphics.DrawMenu();
+            }
+            else if (Graphics.CurrentState == GameState.Playing)
+            {
+                // TODO: Draw game world here
+                // For now, just show a placeholder
+                // Graphics.DrawTexture(...);
+                // You'll add your tile rendering code here
+            }
+
+            // End rendering
+            Graphics.EndFrame();
+        }
+
+        Running = false;
+        Console.WriteLine("RenderLoop exiting.");
+    }
+
     public static void Main()
     {
-        // Entry point for testing purposes
+        // Entry point
         Console.WriteLine("TileGame");
         Console.WriteLine("Initializing...");
         Initialize();
-        Console.WriteLine("Creating main cycle thread...");
+
+        // Initialize graphics
+        Console.WriteLine("Initializing graphics...");
+        Config graphicsConfig = new Config();
+        Graphics = new GraphicsCore(graphicsConfig);
+
+        Console.WriteLine("Creating game threads...");
+        
+        // Create main cycle thread for game logic
         Thread mainCycleThread = new Thread(new ThreadStart(MainCycle));
-        Console.WriteLine("Starting main cycle thread...");
         mainCycleThread.Start();
-        Console.WriteLine("Main cycle thread started. Press Enter to stop.");
-        Console.ReadLine();
-        Running = false;
+        Console.WriteLine("Main cycle thread started.");
+
+        // Run render loop on main thread (required for SFML on macOS)
+        Console.WriteLine("Starting render loop on main thread...");
+        RenderLoop();
+
+        // Wait for main cycle to finish
+        Console.WriteLine("Waiting for main cycle to finish...");
         mainCycleThread.Join();
-        Console.WriteLine("Main cycle stopped. Exiting.");
+        
+        // Cleanup
+        Graphics?.Dispose();
+        Console.WriteLine("Game stopped. Exiting.");
     }
 }
