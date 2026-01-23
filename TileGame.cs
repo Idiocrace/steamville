@@ -2,8 +2,8 @@
 
 using TileGame.Types;
 using TileGame.Processors;
-using TileGame.Processors.Pipes;
 using TileGame.Graphics;
+using TileGame.Errors;
 
 namespace TileGame;
 
@@ -11,18 +11,17 @@ namespace TileGame;
 public class TileGame
 {
     // Global runtime state
-    public static TileGrid MainGrid = new TileGrid();
-    public static List<Tile> Tiles = [];
-    public static List<Pipe> Pipes = [];
-    public static List<Resource> Resources = [];
-    private static readonly object GameLock = new object();
-    private static bool Running = true;
-    private static readonly int TickRate = 20; // ticks per second
+    public TileGrid MainGrid = new TileGrid();
+    public List<Tile> Tiles = [];
+    public List<Resource> Resources = [];
+    private readonly object GameLock = new object();
+    private bool Running = true;
+    private readonly int TickRate = 20; // ticks per second
     
     // Graphics core
-    private static GraphicsCore? Graphics;
+    private GraphicsCore? Graphics;
 
-    public static List<Tile> LoadTiles(string bcpDir)
+    public List<Tile> LoadTiles(string bcpDir)
     {
         // Get all file paths in the bcpDir/tiles/ directory
         List<string> tileFilePaths = [.. Directory.GetFiles(Path.Combine(bcpDir, "tiles"), "*.json")];
@@ -34,7 +33,7 @@ public class TileGame
             string jsonData = File.ReadAllText(filePath);
             try
             {
-                Tile tile = Tile.Deserialize(jsonData);
+                Tile tile = Tile.Deserialize(this, jsonData);
                 // Add tile to a list or dictionary as needed
                 loadedTiles.Add(tile);
             }
@@ -47,7 +46,7 @@ public class TileGame
         return loadedTiles; // Return the list of loaded tiles
     }
 
-    public static List<Resource> LoadResources(string bcpDir)
+    public List<Resource> LoadResources(string bcpDir)
     {
         // Get all file paths in the bcpDir/resources/ directory
         List<string> resourceFilePaths = [.. Directory.GetFiles(Path.Combine(bcpDir, "resources"), "*.json")];
@@ -72,7 +71,7 @@ public class TileGame
         return loadedResources; // Return the list of loaded resources
     }
     
-    public static void Initialize()
+    public void Initialize()
     {
         // Create all necessary game-instance values
         string BaseContentPackDir = "bcp/";
@@ -105,12 +104,11 @@ public class TileGame
         // Temp code to make compiler shut up
         if (Money == -1) { }
         if (Tiles == null) { }
-        if (Pipes == null) { }
 
         Console.WriteLine("Initialization complete.");
     }
 
-    public static void ProcessAllTiles()
+    public void ProcessAllTiles()
     {
         // Create a thread-safe snapshot of the grid so processing doesn't hold the game lock
         Dictionary<Vector2, Tile> snapshot;
@@ -140,11 +138,13 @@ public class TileGame
                     if (adjByPos.TryGetValue(upPos, out var up)) adj["up"] = up;
                     if (adjByPos.TryGetValue(downPos, out var down)) adj["down"] = down;
 
-                    machine.Process(tile, adj);
+                    // To make things easier, we make this a daemonized thread
+                    
+                    machine.Process(this, tile, adj);
                 }
                 else if (tile.Processor is BaseProcessor baseProcessor)
                 {
-                    baseProcessor.Process(tile);
+                    // Skip processing baseprocessor
                 }
                 else
                 {
@@ -159,28 +159,7 @@ public class TileGame
         }
     }
 
-    public static void ProcessAllPipes()
-    {
-        List<Pipe> snapshot;
-        lock (GameLock)
-        {
-            snapshot = Pipes.ToList();
-        }
-
-        foreach (Pipe pipe in snapshot)
-        {
-            try
-            {
-                pipe.ProcessPipe();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error processing pipe: {ex.Message}");
-            }
-        }
-    }
-
-    public static void MainCycle()
+    public void MainCycle()
     {
         // Fixed timestep loop
         var tickDuration = TimeSpan.FromSeconds(1.0 / TickRate);
@@ -205,7 +184,6 @@ public class TileGame
                 if (Graphics.CurrentState == GameState.Playing)
                 {
                     ProcessAllTiles();
-                    ProcessAllPipes();
                 }
 
                 accumulator -= tickDuration;
@@ -213,10 +191,9 @@ public class TileGame
                 tickCounter++;
             }
 
-            // Simple periodic status output every second
+            // Example loop
             if (tickCounter >= TickRate && Graphics.CurrentState == GameState.Playing)
             {
-                FlushConsoleOutput();
                 tickCounter = 0;
             }
 
@@ -227,7 +204,7 @@ public class TileGame
         Console.WriteLine("MainCycle exiting.");
     }
 
-    public static void RenderLoop()
+    public void RenderLoop()
     {
         if (Graphics == null) return;
 
@@ -261,7 +238,7 @@ public class TileGame
         Console.WriteLine("RenderLoop exiting.");
     }
 
-    public static void Main()
+    public void Main()
     {
         // Entry point
         Console.WriteLine("TileGame");

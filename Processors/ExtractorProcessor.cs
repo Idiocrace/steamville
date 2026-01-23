@@ -5,7 +5,7 @@ public class ExtractorProcessor : Processor
 {
     public static new readonly string ProcessorIDLiteral = "extractor";
     private static bool ProcessorLocked = false;
-    public void Process(dynamic tile)
+    public void Process(TileGame game, dynamic tile)
     {
         if (ProcessorLocked) {
             return;

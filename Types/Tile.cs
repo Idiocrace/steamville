@@ -76,7 +76,7 @@ public class Tile
     }
 
     // Will get used for loading up tile files from JSON
-    public static Tile Deserialize(string json)
+    public static Tile Deserialize(TileGame game, string json)
     {
         using var doc = System.Text.Json.JsonDocument.Parse(json);
         var root = doc.RootElement;
@@ -186,7 +186,7 @@ public class Tile
                                     if (resProp.Value.ValueKind == System.Text.Json.JsonValueKind.Number && resProp.Value.TryGetInt32(out var a)) amount = a;
                                     else if (resProp.Value.ValueKind == System.Text.Json.JsonValueKind.String && int.TryParse(resProp.Value.GetString(), out var ai)) amount = ai;
 
-                                    var resource = TileGame.Resources.FirstOrDefault(r => r.ID == resId);
+                                    var resource = game.Resources.FirstOrDefault(r => r.ID == resId);
                                     if (resource == null)
                                     {
                                         throw new ArgumentException($"Unknown resource '{resId}' in processorData.");

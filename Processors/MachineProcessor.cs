@@ -7,7 +7,7 @@ public class MachineProcessor : Processor
     public static new readonly string ProcessorIDLiteral = "machine";
     private static bool processorLocked = false;
     private static readonly Dictionary<string, Tile> adjacentTiles = [];
-    public void Process(dynamic tile, Dictionary<string, Tile> adjacentTiles)
+    public new void Process(TileGame game, dynamic tile, Dictionary<string, Tile> adjacentTiles)
     {
         if (processorLocked)
         {
