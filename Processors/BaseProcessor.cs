@@ -1,10 +1,12 @@
+using TileGame.Types;
+
 namespace TileGame.Processors;
 
 public class BaseProcessor : Processor
 {
     public static new readonly string ProcessorIDLiteral = "base";
     private static bool ProcessorLocked = false;
-    public void Process(dynamic tile)
+    public new void Process(TileGame game, Tile tile, Dictionary<string, Tile> adjacentTiles)
     {
         if (!ProcessorLocked) {
             ProcessorLocked = true;

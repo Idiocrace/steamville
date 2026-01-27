@@ -1,18 +1,69 @@
-# Build outputs
-bin/
-obj/
+# -----------------------------
+# Build / output
+# -----------------------------
+/[Bb]in/
+/[Oo]bj/
+obj/**/
 publish/
 out/
+artifacts/
+ref/
 
-# Rider/VS/VSCode/editor
+# -----------------------------
+# Visual Studio / IDEs
+# -----------------------------
 .vs/
 .vscode/
 .idea/
-
-# User and OS files
-*.user
 *.suo
+*.user
 *.userosscache
+*.VC.db
+
+# Rider
+.idea/
+*.iml
+
+# -----------------------------
+# NuGet / packaging
+# -----------------------------
 *.nupkg
+*.snupkg
+packages/
+
+# -----------------------------
+# Test results / coverage
+# -----------------------------
+TestResults/
+*.trx
+*.coverage
+
+# -----------------------------
+# Logs / temp
+# -----------------------------
 *.log
-*.DS_Store
+*.tmp
+*.bak
+
+# -----------------------------
+# OS generated files
+# -----------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# -----------------------------
+# Generated files
+# -----------------------------
+*.GeneratedMSBuildEditorConfig.editorconfig
+*.GlobalUsings.g.cs
+*.g.cs
+*.g.i.cs
+*.sourcelink.json
+
+# -----------------------------
+# Local tooling
+# -----------------------------
+local.settings.json
+
+# End of file

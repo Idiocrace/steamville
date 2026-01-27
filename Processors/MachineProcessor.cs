@@ -5,31 +5,22 @@ namespace TileGame.Processors;
 public class MachineProcessor : Processor
 {
     public static new readonly string ProcessorIDLiteral = "machine";
-    private static bool processorLocked = false;
+    private static bool ProcessorLocked = false;
     private static readonly Dictionary<string, Tile> adjacentTiles = [];
-    public void Process(dynamic tile, Dictionary<string, Tile> adjacentTiles)
+    public new void Process(TileGame game, Tile tile, Dictionary<string, Tile> adjacentTiles)
     {
-        if (processorLocked)
+        if (ProcessorLocked)
         {
             return;
         }
 
-        if (tile.ProcessorData is not Dictionary<object, object> data)
+        if (tile.ProcessorData is not MachineProcessorData data)
         {
-            throw new ProcessorDataException("MachineProcessor requires ProcessorData as a dictionary.");
+            throw new ProcessorDataException("MachineProcessor requires ProcessorData as MachineProcessorData.");
         }
 
-        if (!data.ContainsKey("consumption"))
-        {
-            throw new ProcessorDataException("MachineProcessor requires 'consumption' data.");
-        }
-        if (!data.ContainsKey("production"))
-        {
-            throw new ProcessorDataException("MachineProcessor requires 'production' data.");
-        }
-
-        var consumptionCases = (Dictionary<string, Dictionary<object, object>>)data["consumption"];
-        var productionCases = (Dictionary<string, Dictionary<object, object>>)data["production"];
+        var consumptionCases = data.Consumption;
+        var productionCases = data.Production;
         var consumptionCaseNames = consumptionCases.Keys.ToList();
         var productionCaseNames = productionCases.Keys.ToList();
 
@@ -38,23 +29,22 @@ public class MachineProcessor : Processor
         {
             if (!productionCaseNames.Contains(caseName))
             {
-                processorLocked = true;
+                ProcessorLocked = true;
                 return;
             }
         }
 
         // Process first case that is fulfillable
-        foreach (KeyValuePair<string, Dictionary<object, object>> caseEntry in consumptionCases)
+        foreach (KeyValuePair<string, MachineCase> caseEntry in consumptionCases)
         {
             var equivalentProductionCase = productionCases[caseEntry.Key];
 
             bool allContainersFulfilled = true;
             // Check each requested container for this case
-            foreach (var requestedContainerObj in caseEntry.Value.Values)
+            foreach (var containerSpec in caseEntry.Value.Containers.Values)
             {
-                var requestedContainer = (Dictionary<object, object>)requestedContainerObj;
-                var containerName = (string)requestedContainer["container"];
-                var resourcesRequested = (Dictionary<Resource, int>)requestedContainer["resources"];
+                var containerName = containerSpec.ContainerName;
+                var resourcesRequested = containerSpec.Resources;
 
                 if (!tile.TileContainers.ContainsKey(containerName))
                 {
@@ -77,11 +67,10 @@ public class MachineProcessor : Processor
             if (allContainersFulfilled)
             {
                 // Consume resources
-                foreach (var requestedContainerObj in caseEntry.Value.Values)
+                foreach (var containerSpec in caseEntry.Value.Containers.Values)
                 {
-                    var requestedContainer = (Dictionary<object, object>)requestedContainerObj;
-                    var containerName = (string)requestedContainer["container"];
-                    var resourcesRequested = (Dictionary<Resource, int>)requestedContainer["resources"];
+                    var containerName = containerSpec.ContainerName;
+                    var resourcesRequested = containerSpec.Resources;
                     var targetContainer = tile.TileContainers[containerName];
 
                     foreach (var resourceRequest in resourcesRequested)
@@ -91,11 +80,10 @@ public class MachineProcessor : Processor
                 }
 
                 // Produce outputs
-                foreach (var productionContainerObj in equivalentProductionCase.Values)
+                foreach (var containerSpec in equivalentProductionCase.Containers.Values)
                 {
-                    var productionContainer = (Dictionary<object, object>)productionContainerObj;
-                    var containerName = (string)productionContainer["container"];
-                    var resourcesProduced = (Dictionary<Resource, int>)productionContainer["resources"];
+                    var containerName = containerSpec.ContainerName;
+                    var resourcesProduced = containerSpec.Resources;
 
                     if (!tile.TileContainers.ContainsKey(containerName))
                     {
