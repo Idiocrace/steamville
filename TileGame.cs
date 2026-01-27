@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 
 using TileGame.Types;
 using TileGame.Processors;
@@ -21,7 +21,8 @@ public class TileGame
     public string Phase = "No Phase";
     public int Money = 0;
     public List<string> ActiveCheats = [];
-    
+    // TEDDY FIX THIS
+    public GameGUI? GUI = null; // initialized in Start method
     // Graphics core
     private GraphicsCore? Graphics;
 
@@ -254,35 +255,26 @@ public class TileGame
     {
         if (Graphics == null) return;
 
-        while (Graphics.IsRunning)
-        {
-            // Handle window events
-            Graphics.PollEvents();
-
-            // Begin rendering
-            Graphics.BeginFrame();
-
-            // Handle different game states
-            if (Graphics.CurrentState == GameState.MainMenu)
+            while (Graphics.IsRunning)
             {
-                Graphics.UpdateMenu();
-                Graphics.DrawMenu();
-            }
-            else if (Graphics.CurrentState == GameState.Playing)
-            {
-                // TODO: Draw game world here
-                // For now, just show a placeholder
-                // Graphics.DrawTexture(...);
-                // You'll add your tile rendering code here
+                Graphics.PollEvents();
+                Graphics.BeginFrame();
+
+                if (Graphics.CurrentState == GameState.MainMenu)
+                {
+                    GUI?.UpdateMainMenu();
+                    GUI?.DrawMainMenu();
+                }
+                else if (Graphics.CurrentState == GameState.Playing)
+                {
+                    // placeholder for game drawing
+                }
+
+                Graphics.EndFrame();
             }
 
-            // End rendering
-            Graphics.EndFrame();
+            Running = false;
         }
-
-        Running = false;
-        Console.WriteLine("RenderLoop exiting.");
-    }
 
     public void Start()
     {
@@ -294,25 +286,15 @@ public class TileGame
         // Initialize graphics
         Console.WriteLine("Initializing graphics...");
         Config graphicsConfig = new Config();
-        Graphics = new GraphicsCore(graphicsConfig);
+        Graphics = new GraphicsCore();
+        GUI = new GameGUI(Graphics);
 
-        Console.WriteLine("Creating game threads...");
-        
-        // Create main cycle thread for game logic
-        Thread mainCycleThread = new Thread(new ThreadStart(MainCycle));
-        mainCycleThread.Start();
-        Console.WriteLine("Main cycle thread started.");
+        Thread gameThread = new Thread(MainCycle);
+        gameThread.Start();
 
-        // Run render loop on main thread (required for SFML on macOS)
-        Console.WriteLine("Starting render loop on main thread...");
         RenderLoop();
 
-        // Wait for main cycle to finish
-        Console.WriteLine("Waiting for main cycle to finish...");
-        mainCycleThread.Join();
-        
-        // Cleanup
-        Graphics?.Dispose();
-        Console.WriteLine("Game stopped. Exiting.");
+        gameThread.Join();
+        Graphics.Dispose();
     }
 }

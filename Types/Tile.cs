@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq; // Added for LINQ methods
+using System.Numerics; // Added for Vector2/Vector3
 using TileGame.Processors;
 
 namespace TileGame.Types;
@@ -126,9 +130,9 @@ public class Tile
             }
         }
 
-        // Serialize to JSON
-        return System.Text.Json.JsonSerializer.Serialize(data);
-    }
+            // Serialize to JSON
+            return System.Text.Json.JsonSerializer.Serialize(data);
+        }
 
     // Will get used for loading up tile files from JSON
     public static Tile Deserialize(TileGame game, string json)
@@ -136,31 +140,31 @@ public class Tile
         using var doc = System.Text.Json.JsonDocument.Parse(json);
         var root = doc.RootElement;
 
-        if (!root.TryGetProperty("id", out var idEl) || idEl.ValueKind != System.Text.Json.JsonValueKind.String)
-        {
-            throw new ArgumentException("Tile JSON data must contain an 'id' field.");
-        }
-        string id = idEl.GetString()!;
-
-        string displayName = root.TryGetProperty("name", out var nameEl) && nameEl.ValueKind == System.Text.Json.JsonValueKind.String
-            ? nameEl.GetString()!
-            : "Base Tile";
-
-        int width = 1, height = 1;
-        if (root.TryGetProperty("boundingBox", out var bboxEl))
-        {
-            if (bboxEl.ValueKind == System.Text.Json.JsonValueKind.Array)
+            if (!root.TryGetProperty("id", out var idEl) || idEl.ValueKind != System.Text.Json.JsonValueKind.String)
             {
-                var arr = bboxEl.EnumerateArray().ToArray();
-                if (arr.Length >= 1 && arr[0].TryGetInt32(out var w)) width = w;
-                if (arr.Length >= 2 && arr[1].TryGetInt32(out var h)) height = h;
+                throw new ArgumentException("Tile JSON data must contain an 'id' field.");
             }
-            else if (bboxEl.ValueKind == System.Text.Json.JsonValueKind.Object)
+            string id = idEl.GetString()!;
+
+            string displayName = root.TryGetProperty("name", out var nameEl) && nameEl.ValueKind == System.Text.Json.JsonValueKind.String
+                ? nameEl.GetString()!
+                : "Base Tile";
+
+            int width = 1, height = 1;
+            if (root.TryGetProperty("boundingBox", out var bboxEl))
             {
-                if (bboxEl.TryGetProperty("width", out var wEl) && wEl.TryGetInt32(out var w)) width = w;
-                if (bboxEl.TryGetProperty("height", out var hEl) && hEl.TryGetInt32(out var h)) height = h;
+                if (bboxEl.ValueKind == System.Text.Json.JsonValueKind.Array)
+                {
+                    var arr = bboxEl.EnumerateArray().ToArray();
+                    if (arr.Length >= 1 && arr[0].TryGetInt32(out var w)) width = w;
+                    if (arr.Length >= 2 && arr[1].TryGetInt32(out var h)) height = h;
+                }
+                else if (bboxEl.ValueKind == System.Text.Json.JsonValueKind.Object)
+                {
+                    if (bboxEl.TryGetProperty("width", out var wEl) && wEl.TryGetInt32(out var w)) width = w;
+                    if (bboxEl.TryGetProperty("height", out var hEl) && hEl.TryGetInt32(out var h)) height = h;
+                }
             }
-        }
 
         var tile = new Tile
         {
@@ -172,26 +176,26 @@ public class Tile
             ProcessorData = null
         };
 
-        // Parse containers (capacity + optional filter list)
-        if (root.TryGetProperty("containers", out var containersEl) && containersEl.ValueKind == System.Text.Json.JsonValueKind.Object)
-        {
-            foreach (var contProp in containersEl.EnumerateObject())
+            // Parse containers (capacity + optional filter list)
+            if (root.TryGetProperty("containers", out var containersEl) && containersEl.ValueKind == System.Text.Json.JsonValueKind.Object)
             {
-                string contName = contProp.Name;
-                int cap = 0;
-                List<string>? filter = null;
-                var contObj = contProp.Value;
-                if (contObj.ValueKind == System.Text.Json.JsonValueKind.Object)
+                foreach (var contProp in containersEl.EnumerateObject())
                 {
-                    if (contObj.TryGetProperty("capacity", out var capEl) && capEl.TryGetInt32(out var c)) cap = c;
-                    if (contObj.TryGetProperty("filter", out var filterEl) && filterEl.ValueKind == System.Text.Json.JsonValueKind.Array)
+                    string contName = contProp.Name;
+                    int cap = 0;
+                    List<string>? filter = null;
+                    var contObj = contProp.Value;
+                    if (contObj.ValueKind == System.Text.Json.JsonValueKind.Object)
                     {
-                        filter = filterEl.EnumerateArray().Where(e => e.ValueKind == System.Text.Json.JsonValueKind.String).Select(e => e.GetString()!).ToList();
+                        if (contObj.TryGetProperty("capacity", out var capEl) && capEl.TryGetInt32(out var c)) cap = c;
+                        if (contObj.TryGetProperty("filter", out var filterEl) && filterEl.ValueKind == System.Text.Json.JsonValueKind.Array)
+                        {
+                            filter = filterEl.EnumerateArray().Where(e => e.ValueKind == System.Text.Json.JsonValueKind.String).Select(e => e.GetString()!).ToList();
+                        }
                     }
+                    tile.TileContainers[contName] = new Container(cap, filter);
                 }
-                tile.TileContainers[contName] = new Container(cap, filter);
             }
-        }
 
         // Set processor
         switch (root.TryGetProperty("processor", out var procEl) && procEl.ValueKind == System.Text.Json.JsonValueKind.String
@@ -377,6 +381,7 @@ public class Tile
             }
         }
 
-        return tile;
+            return tile;
+        }
     }
 }
