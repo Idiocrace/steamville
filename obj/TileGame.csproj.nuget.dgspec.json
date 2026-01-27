@@ -1,25 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "/Users/theodorecromwell/Documents/Coding/steamville/TileGame.csproj": {}
+    "C:\\Users\\jessj\\Downloads\\steamville\\TileGame.csproj": {}
   },
   "projects": {
-    "/Users/theodorecromwell/Documents/Coding/steamville/TileGame.csproj": {
+    "C:\\Users\\jessj\\Downloads\\steamville\\TileGame.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/theodorecromwell/Documents/Coding/steamville/TileGame.csproj",
+        "projectUniqueName": "C:\\Users\\jessj\\Downloads\\steamville\\TileGame.csproj",
         "projectName": "TileGame",
-        "projectPath": "/Users/theodorecromwell/Documents/Coding/steamville/TileGame.csproj",
-        "packagesPath": "/Users/theodorecromwell/.nuget/packages/",
-        "outputPath": "/Users/theodorecromwell/Documents/Coding/steamville/obj/",
+        "projectPath": "C:\\Users\\jessj\\Downloads\\steamville\\TileGame.csproj",
+        "packagesPath": "C:\\Users\\jessj\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jessj\\Downloads\\steamville\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/theodorecromwell/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\jessj\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -73,7 +80,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.310/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
