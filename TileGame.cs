@@ -21,7 +21,8 @@ public class TileGame
     public string Phase = "No Phase";
     public int Money = 0;
     public List<string> ActiveCheats = [];
-    
+    // TEDDY FIX THIS
+    public GameGUI? GUI = null; // initialized in Start method
     // Graphics core
     private GraphicsCore? Graphics;
 
@@ -285,15 +286,15 @@ public class TileGame
         // Initialize graphics
         Console.WriteLine("Initializing graphics...");
         Config graphicsConfig = new Config();
-        Graphics = new GraphicsCore(graphicsConfig);
+        Graphics = new GraphicsCore();
+        GUI = new GameGUI(Graphics);
 
-            Thread gameThread = new Thread(MainCycle);
-            gameThread.Start();
+        Thread gameThread = new Thread(MainCycle);
+        gameThread.Start();
 
-            RenderLoop();
+        RenderLoop();
 
-            gameThread.Join();
-            Graphics.Dispose();
-        }
+        gameThread.Join();
+        Graphics.Dispose();
     }
 }
