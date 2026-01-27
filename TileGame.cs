@@ -238,7 +238,7 @@ public class TileGame
         Console.WriteLine("RenderLoop exiting.");
     }
 
-    public void Main()
+    public void Start()
     {
         // Entry point
         Console.WriteLine("TileGame");

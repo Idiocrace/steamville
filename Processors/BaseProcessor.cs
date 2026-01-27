@@ -6,7 +6,7 @@ public class BaseProcessor : Processor
 {
     public static new readonly string ProcessorIDLiteral = "base";
     private static bool ProcessorLocked = false;
-    public new void Process(TileGame game, dynamic tile, Dictionary<string, Tile> adjacentTiles)
+    public new void Process(TileGame game, Tile tile, Dictionary<string, Tile> adjacentTiles)
     {
         if (!ProcessorLocked) {
             ProcessorLocked = true;

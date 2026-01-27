@@ -42,16 +42,17 @@ public class GraphicsCore : IDisposable
         // Try to load custom font, fall back to system font if not found
         try
         {
-            GameFont = new Font("Assets/Fonts/font_a.ttf");
-            Console.WriteLine("Loaded custom font from Assets/Fonts/font_a.ttf");
+            GameFont = new Font("bcp/fonts/font_a.ttf");
+            Console.WriteLine("Loaded custom font from bcp/fonts/font_a.ttf");
         }
         catch (SFML.LoadingFailedException)
         {
-            // Try common macOS system font paths
+            // Try common macOS system font paths and Windows Arial font path
             string[] systemFontPaths = {
                 "/System/Library/Fonts/Supplemental/Arial.ttf",
                 "/System/Library/Fonts/Helvetica.ttc",
-                "/Library/Fonts/Arial.ttf"
+                "/Library/Fonts/Arial.ttf",
+                "C:\\Windows\\Fonts\\arial.ttf"
             };
 
             bool fontLoaded = false;

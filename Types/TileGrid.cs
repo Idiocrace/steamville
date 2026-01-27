@@ -38,6 +38,7 @@ public class TileGrid
 
     public Dictionary<Vector2, Tile> GetAdjacentTiles(Vector2 position)
     {
+        // This gets the tiles adjacent to the given position (up, down, left, right) not accounting for rotation
         var adjacentPositions = new List<Vector2>
         {
             new Vector2(position.X - 1, position.Y),

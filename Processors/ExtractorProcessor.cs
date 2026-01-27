@@ -1,3 +1,5 @@
+using TileGame.Types;
+
 namespace TileGame.Processors;
 
 // Used for extractors
@@ -5,42 +7,32 @@ public class ExtractorProcessor : Processor
 {
     public static new readonly string ProcessorIDLiteral = "extractor";
     private static bool ProcessorLocked = false;
-    public void Process(TileGame game, dynamic tile)
+    public new void Process(TileGame game, Tile tile, Dictionary<string, Tile> adjacentTiles)
     {
         if (ProcessorLocked) {
             return;
         }
 
-        if (tile.ProcessorData is not Dictionary<object, object> tileData)
+        if (tile.ProcessorData is not ExtractorProcessorData data)
         {
             ProcessorLocked = true;
-            throw new ProcessorDataException("ExtractorProcessor requires ProcessorData as a dictionary.");
+            throw new ProcessorDataException("ExtractorProcessor requires ProcessorData as ExtractorProcessorData.");
         }
-
-        if (!tileData.ContainsKey("extraction"))
-        {
-            ProcessorLocked = true;
-            throw new ProcessorDataException("ExtractorProcessor requires 'extraction' data.");
-        }
-
-        if (!tileData.ContainsKey("requirements"))
-        {
-            ProcessorLocked = true;
-            throw new ProcessorDataException("ExtractorProcessor requires 'requirements' data.");
-        }
-
-        object extractionData = tileData["extraction"];
-        object requirementsData = tileData["requirements"];
 
         // Check if the requirements are met
         bool requirementsMet = true;
-        foreach (var requirement in ((Dictionary<object, object>)requirementsData).Values)
+        foreach (var requirement in data.Requirements)
         {
-            // Get the requested container
-            var container = ((Dictionary<object, object>)requirement)["container"];
-            var amount = ((Dictionary<object, object>)requirement)["amount"];
             // Check if the container has enough resources
-            if (!tileData.ContainsKey(container) || (int)tileData[container] < (int)amount)
+            var containerName = requirement.Container;
+            if (!tile.TileContainers.ContainsKey(containerName))
+            {
+                requirementsMet = false;
+                break;
+            }
+            
+            var totalInContainer = tile.TileContainers[containerName].Contents.Values.Sum();
+            if (totalInContainer < requirement.Amount)
             {
                 requirementsMet = false;
                 break;
@@ -53,15 +45,25 @@ public class ExtractorProcessor : Processor
         }
 
         // Now that we know there is sufficient resources, we process!
-        foreach (var extraction in ((Dictionary<object, object>)extractionData).Values)
+        foreach (var extraction in data.Extraction)
         {
-            var container = ((Dictionary<object, object>)extraction)["container"];
-            var amount = ((Dictionary<object, object>)extraction)["amount"];
-            if (!tileData.ContainsKey(container))
+            var containerName = extraction.Container;
+            var amount = extraction.Amount;
+            
+            if (!tile.TileContainers.ContainsKey(containerName))
             {
-                tileData[container] = 0;
+                // Skip if container doesn't exist
+                continue;
             }
-            tileData[container] = (int)tileData[container] + (int)amount;
+            
+            // Note: This implementation assumes extractors work with a single resource type
+            // You may need to adjust based on your game's requirements
+            var container = tile.TileContainers[containerName];
+            if (container.Contents.Any())
+            {
+                var resource = container.Contents.First().Key;
+                container.AddResource(resource, amount);
+            }
         }
     }
 }

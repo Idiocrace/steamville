@@ -1,0 +1,8 @@
+{
+  "id": "matter",
+  "name": "Matter",
+  "sprite": "matter.png",
+  "color": "#f0f0f0",
+  "value": 0.1,
+  "types": []
+}

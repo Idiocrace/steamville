@@ -1,0 +1,14 @@
+{
+  "id": "pipe_tee",
+  "name": "T-Junction Pipe",
+  "boundingBox": [1, 1],
+  "containers": {
+    "internal": {
+      "capacity": 100
+    }
+  },
+  "processor": "pipe",
+  "processorData": {
+    "ports": ["Top", "Left", "Right"]
+  }
+}

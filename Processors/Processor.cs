@@ -5,13 +5,13 @@ namespace TileGame.Processors;
 public abstract class Processor
 {
     public static readonly string ProcessorIDLiteral = "processor";
-    private static bool processorLocked = false;
+    private static bool ProcessorLocked = false;
     private static Dictionary<string, Tile> adjacentTiles = [];
-    public void Process(TileGame game, dynamic tile, Dictionary<string, Tile> adjacentTiles)
+    public void Process(TileGame game, Tile tile, Dictionary<string, Tile> adjacentTiles)
     {
-        if (!processorLocked)
+        if (!ProcessorLocked)
         {
-            processorLocked = true;
+            ProcessorLocked = true;
             throw new InvalidOperationException("Processor.process() is not implemented yet.");
         }
     }

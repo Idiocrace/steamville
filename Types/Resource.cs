@@ -61,7 +61,7 @@ public class Resource
             throw new ArgumentException("Resource JSON data must contain an 'id' field.");
         }
 
-        List<string> fields = ["id", "name", "unit", "unitFull", "sprite", "color", "types", "value"];
+        List<string> fields = ["id", "name", "sprite", "color", "types", "value"];
 
         // Check for unexpected fields and list them explicitly
         var unexpected = root.EnumerateObject().Select(p => p.Name).Where(n => !fields.Contains(n)).ToList();
@@ -83,8 +83,6 @@ public class Resource
         {
             ID = idEl.GetString()!,
             Name = root.TryGetProperty("name", out var nameEl) && nameEl.ValueKind == System.Text.Json.JsonValueKind.String ? nameEl.GetString()! : "Resource",
-            Unit = root.TryGetProperty("unit", out var unitEl) && unitEl.ValueKind == System.Text.Json.JsonValueKind.String ? unitEl.GetString()! : "u",
-            UnitFull = root.TryGetProperty("unitFull", out var ufEl) && ufEl.ValueKind == System.Text.Json.JsonValueKind.String ? ufEl.GetString()! : "unit(s)",
             Sprite = root.TryGetProperty("sprite", out var spEl) && spEl.ValueKind == System.Text.Json.JsonValueKind.String ? spEl.GetString()! : "default.png",
             Color = root.TryGetProperty("color", out var colorEl) && colorEl.ValueKind == System.Text.Json.JsonValueKind.String ? colorEl.GetString()! : "#ff00ff"
         };
