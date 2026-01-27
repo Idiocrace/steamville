@@ -381,7 +381,6 @@ public class Tile
             }
         }
 
-            return tile;
-        }
+        return tile;
     }
 }
