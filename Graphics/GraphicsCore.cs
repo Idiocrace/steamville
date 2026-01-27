@@ -43,11 +43,9 @@ namespace TileGame.Graphics
             }
         }
 
-        public void SetState(GameState state, string? title = null)
+        public void SetState(GameState state)
         {
             CurrentState = state;
-            if (!string.IsNullOrEmpty(title))
-                GameWindow.SetTitle(title);
         }
 
         public void PollEvents() => GameWindow.DispatchEvents();

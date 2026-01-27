@@ -16,16 +16,16 @@ public class MachineProcessor : Processor
 
         if (tile.ProcessorData is not Dictionary<object, object> data)
         {
-            throw new ProcessorDataException("MachineProcessor requires ProcessorData as a dictionary.");
+            throw new InvalidOperationException("MachineProcessor requires ProcessorData as a dictionary.");
         }
 
         if (!data.ContainsKey("consumption"))
         {
-            throw new ProcessorDataException("MachineProcessor requires 'consumption' data.");
+            throw new InvalidOperationException("MachineProcessor requires 'consumption' data.");
         }
         if (!data.ContainsKey("production"))
         {
-            throw new ProcessorDataException("MachineProcessor requires 'production' data.");
+            throw new InvalidOperationException("MachineProcessor requires 'production' data.");
         }
 
         var consumptionCases = (Dictionary<string, Dictionary<object, object>>)data["consumption"];

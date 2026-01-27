@@ -1,14 +1,22 @@
-namespace TileGame.Processors;
-
-public class BaseProcessor : Processor
+namespace TileGame.Processors
 {
-    public static new readonly string ProcessorIDLiteral = "base";
-    private static bool ProcessorLocked = false;
-    public void Process(dynamic tile)
+    public class BaseProcessor : Processor
     {
-        if (!ProcessorLocked) {
-            ProcessorLocked = true;
-            throw new InvalidOperationException("BaseProcessor.process() is not implemented yet.");
+        public static new readonly string ProcessorIDLiteral = "base";
+        private static bool ProcessorLocked = false;
+
+        // Implement Tick for game loop
+        public virtual void Tick(TileGame.Types.Tile tile)
+        {
+            // Default does nothing, override in subclasses
+        }
+
+        public void Process(dynamic tile)
+        {
+            if (!ProcessorLocked) {
+                ProcessorLocked = true;
+                throw new System.InvalidOperationException("BaseProcessor.process() is not implemented yet.");
+            }
         }
     }
 }

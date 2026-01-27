@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
+using TileGame.Types;
 using TileGame.Graphics;
+using TileGame.Processors;
 
 namespace TileGame
 {
-    public class TileGame
+    public class TileGameApp
     {
-        // Static resources (fixes missing Resources error)
-        public static System.Collections.Generic.List<object> Resources = new System.Collections.Generic.List<object>();
+        public static List<object> Resources = new();
 
         private static GraphicsCore? Graphics;
         private static GameGUI? GUI;
@@ -17,8 +19,23 @@ namespace TileGame
         {
             while (Running && Graphics != null && Graphics.IsRunning)
             {
-                // placeholder for game logic
-                Thread.Sleep(16); // ~60 ticks/sec
+                if (GameRender.Grid != null)
+                {
+                    foreach (var kv in GameRender.Grid.GetAllTiles().ToList())
+                    {
+                        var tile = kv.Value;
+                        object? proc = tile.Processor;
+
+                        if (proc == null) continue;
+
+                        if (proc is BaseProcessor p)
+                            p.Tick(tile);
+                        else if (proc is Action<Tile> action)
+                            action(tile);
+                    }
+                }
+
+                Thread.Sleep(1000);
             }
         }
 
@@ -38,7 +55,7 @@ namespace TileGame
                 }
                 else if (Graphics.CurrentState == GameState.Playing)
                 {
-                    // placeholder for game drawing
+                    GameRender.UpdateAndDraw(Graphics);
                 }
 
                 Graphics.EndFrame();
@@ -52,11 +69,14 @@ namespace TileGame
             Graphics = new GraphicsCore();
             GUI = new GameGUI(Graphics);
 
+            GameRender.Grid = new TileGrid();
+            GameRender.ResourceGrid = new ResourceGrid();
+
             Thread gameThread = new Thread(MainCycle);
             gameThread.Start();
 
             RenderLoop();
-
+    
             gameThread.Join();
             Graphics.Dispose();
         }

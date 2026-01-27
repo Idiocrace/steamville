@@ -1,67 +1,52 @@
-namespace TileGame.Processors;
+using TileGame.Types;
+using SFML.System;
 
-// Used for extractors
-public class ExtractorProcessor : Processor
+namespace TileGame.Processors
 {
-    public static new readonly string ProcessorIDLiteral = "extractor";
-    private static bool ProcessorLocked = false;
-    public void Process(dynamic tile)
+    public static class ExtractorProcessor
     {
-        if (ProcessorLocked) {
-            return;
-        }
-
-        if (tile.ProcessorData is not Dictionary<object, object> tileData)
+        public static void Process(Tile tile)
         {
-            ProcessorLocked = true;
-            throw new ProcessorDataException("ExtractorProcessor requires ProcessorData as a dictionary.");
-        }
-
-        if (!tileData.ContainsKey("extraction"))
-        {
-            ProcessorLocked = true;
-            throw new ProcessorDataException("ExtractorProcessor requires 'extraction' data.");
-        }
-
-        if (!tileData.ContainsKey("requirements"))
-        {
-            ProcessorLocked = true;
-            throw new ProcessorDataException("ExtractorProcessor requires 'requirements' data.");
-        }
-
-        object extractionData = tileData["extraction"];
-        object requirementsData = tileData["requirements"];
-
-        // Check if the requirements are met
-        bool requirementsMet = true;
-        foreach (var requirement in ((Dictionary<object, object>)requirementsData).Values)
-        {
-            // Get the requested container
-            var container = ((Dictionary<object, object>)requirement)["container"];
-            var amount = ((Dictionary<object, object>)requirement)["amount"];
-            // Check if the container has enough resources
-            if (!tileData.ContainsKey(container) || (int)tileData[container] < (int)amount)
+            // Use the "output" container by default
+            if (!tile.TileContainers.TryGetValue("output", out var container))
             {
-                requirementsMet = false;
-                break;
+                GameRender.AddLog($"[Extractor @ {tile.GridPosition.X},{tile.GridPosition.Y}] ❌ Missing output container.");
+                return;
             }
-        }
 
-        if (!requirementsMet)
-        {
-            return;
-        }
+            Vector2i pos = tile.GridPosition;
 
-        // Now that we know there is sufficient resources, we process!
-        foreach (var extraction in ((Dictionary<object, object>)extractionData).Values)
-        {
-            var container = ((Dictionary<object, object>)extraction)["container"];
-            var amount = ((Dictionary<object, object>)extraction)["amount"];
-            if (!tileData.ContainsKey(container))
+            var node = GameRender.ResourceGrid.GetNode(pos);
+            if (node == null)
             {
-                tileData[container] = 0;
+                GameRender.AddLog($"[Extractor @ {pos.X},{pos.Y}] ❌ No resource under extractor.");
+                return;
             }
-            tileData[container] = (int)tileData[container] + (int)amount;
+
+            if (node.Richness <= 0)
+            {
+                GameRender.AddLog($"[Extractor @ {pos.X},{pos.Y}] 💀 Resource depleted.");
+                GameRender.ResourceGrid.RemoveNode(pos);
+                return;
+            }
+
+            var resource = node.ResourceType;
+            int amount = 1;
+
+            GameRender.AddLog($"[Extractor @ {pos.X},{pos.Y}] Attempting to mine {resource.Name}");
+
+            if (!container.CanAddResource(resource, amount))
+            {
+                GameRender.AddLog("  ⚠ Container full.");
+                return;
+            }
+
+            container.AddResource(resource, amount);
+            node.Richness -= amount;
+
+            GameRender.AddLog($"  ⛏ Mined {amount} {resource.Name}");
+
+            GameRender.AddLog($"  🪨 Remaining in ground: {node.Richness}");
         }
     }
 }

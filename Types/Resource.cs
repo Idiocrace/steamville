@@ -1,124 +1,101 @@
-using System.Diagnostics.Contracts;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace TileGame.Types; 
-
-public class Resource
+namespace TileGame.Types
 {
-    public string ID = "resource";
-    public string Name = "Resource";
-    public string Unit = "u";
-    public string UnitFull = "unit(s)";
-    public string Sprite = "default.png";
-    public string Color = "#ff00ff";
-    public double Value = 0.0;
-    public ResourceType Type = ResourceType.None;
-
-    // Won't get used in anything but the SteamVille Modding Toolchain for easy generation of resource JSON files
-    public string Serialize()
+    public class Resource
     {
-        // Returns a full JSON serialization of the Resource (good for generating a JSON resource file)
-        // First, we properly format resourcetypes
-        List<string> RTypes = [];
-        switch (Type)
+        public string ID { get; set; } = "resource";
+        public string Name { get; set; } = "Resource";
+        public string Unit { get; set; } = "u";
+        public string UnitFull { get; set; } = "unit(s)";
+        public string Sprite { get; set; } = "default.png";
+        public string Color { get; set; } = "#ff00ff";
+        public double Value { get; set; } = 0.0;
+        public ResourceType Type { get; set; } = ResourceType.None;
+
+        // CRITICAL for using Resource as Dictionary key
+        public override bool Equals(object? obj)
+            => obj is Resource other && ID == other.ID;
+
+        public override int GetHashCode()
+            => ID.GetHashCode();
+
+        public string Serialize()
         {
-            case ResourceType.None:
-                break;
-            case ResourceType.Importable:
-                RTypes.Add("importable");
-                break;
-            case ResourceType.Exportable:
-                RTypes.Add("exportable");
-                break;
-            case ResourceType.Both:
-                RTypes.Add("importable");
-                RTypes.Add("exportable");
-                break;
-        }
+            var types = new List<string>();
+            if (Type is ResourceType.Importable or ResourceType.Both) types.Add("importable");
+            if (Type is ResourceType.Exportable or ResourceType.Both) types.Add("exportable");
 
-        Dictionary<string, object> data = new Dictionary<string, object>
-        {
-            { "id", ID },
-            { "name", Name },
-            { "unit", Unit },
-            { "unitFull", UnitFull },
-            { "sprite", Sprite },
-            { "color", Color },
-            { "value", Value },
-            { "types", RTypes }
-        };
-        return System.Text.Json.JsonSerializer.Serialize(data);
-    }
-
-    // Will get used for loading up resource files from JSON
-    public static Resource Deserialize(string json)
-    {
-        using var doc = System.Text.Json.JsonDocument.Parse(json);
-        var root = doc.RootElement;
-
-        if (!root.TryGetProperty("id", out var idEl) || idEl.ValueKind != System.Text.Json.JsonValueKind.String)
-        {
-            throw new ArgumentException("Resource JSON data must contain an 'id' field.");
-        }
-
-        List<string> fields = ["id", "name", "unit", "unitFull", "sprite", "color", "types", "value"];
-
-        // Check for unexpected fields and list them explicitly
-        var unexpected = root.EnumerateObject().Select(p => p.Name).Where(n => !fields.Contains(n)).ToList();
-        if (unexpected.Count > 0)
-        {
-            Console.WriteLine($"Warning: Resource '{idEl.GetString()}' contains unexpected fields: {string.Join(", ", unexpected)}.");
-        }
-
-        // Warn if there are missing fields
-        foreach (var field in fields)
-        {
-            if (!root.TryGetProperty(field, out var _))
+            var data = new Dictionary<string, object>
             {
-                Console.WriteLine($"Warning: Resource '{idEl.GetString()}' is missing expected field '{field}'.");
+                ["id"] = ID,
+                ["name"] = Name,
+                ["unit"] = Unit,
+                ["unitFull"] = UnitFull,
+                ["sprite"] = Sprite,
+                ["color"] = Color,
+                ["value"] = Value,
+                ["types"] = types
+            };
+
+            return System.Text.Json.JsonSerializer.Serialize(data);
+        }
+
+        public static Resource Deserialize(string json)
+        {
+            using var doc = System.Text.Json.JsonDocument.Parse(json);
+            var root = doc.RootElement;
+
+            if (!root.TryGetProperty("id", out var idEl))
+                throw new ArgumentException("Resource JSON must contain 'id'.");
+
+            var resource = new Resource
+            {
+                ID = idEl.GetString()!,
+                Name = root.TryGetProperty("name", out var n) ? n.GetString()! : "Resource",
+                Unit = root.TryGetProperty("unit", out var u) ? u.GetString()! : "u",
+                UnitFull = root.TryGetProperty("unitFull", out var uf) ? uf.GetString()! : "unit(s)",
+                Sprite = root.TryGetProperty("sprite", out var s) ? s.GetString()! : "default.png",
+                Color = root.TryGetProperty("color", out var c) ? c.GetString()! : "#ff00ff"
+            };
+
+            if (root.TryGetProperty("value", out var valEl))
+            {
+                if (valEl.TryGetDouble(out var v)) resource.Value = v;
             }
-        }
 
-        var resource = new Resource
-        {
-            ID = idEl.GetString()!,
-            Name = root.TryGetProperty("name", out var nameEl) && nameEl.ValueKind == System.Text.Json.JsonValueKind.String ? nameEl.GetString()! : "Resource",
-            Unit = root.TryGetProperty("unit", out var unitEl) && unitEl.ValueKind == System.Text.Json.JsonValueKind.String ? unitEl.GetString()! : "u",
-            UnitFull = root.TryGetProperty("unitFull", out var ufEl) && ufEl.ValueKind == System.Text.Json.JsonValueKind.String ? ufEl.GetString()! : "unit(s)",
-            Sprite = root.TryGetProperty("sprite", out var spEl) && spEl.ValueKind == System.Text.Json.JsonValueKind.String ? spEl.GetString()! : "default.png",
-            Color = root.TryGetProperty("color", out var colorEl) && colorEl.ValueKind == System.Text.Json.JsonValueKind.String ? colorEl.GetString()! : "#ff00ff"
-        };
-
-        if (root.TryGetProperty("value", out var valEl))
-        {
-            if (valEl.ValueKind == System.Text.Json.JsonValueKind.Number && valEl.TryGetDouble(out var v)) resource.Value = v;
-            else if (valEl.ValueKind == System.Text.Json.JsonValueKind.String && double.TryParse(valEl.GetString(), out var vs)) resource.Value = vs;
-        }
-
-        if (root.TryGetProperty("types", out var typeEl) && typeEl.ValueKind == System.Text.Json.JsonValueKind.Array)
-        {
-            foreach (var item in typeEl.EnumerateArray())
+            // ✅ FIXED TYPE PARSING
+            if (root.TryGetProperty("types", out var typeEl) && typeEl.ValueKind == System.Text.Json.JsonValueKind.Array)
             {
-                if (Enum.TryParse<ResourceType>(item.GetString()!, out var rt))
+                bool imp = false, exp = false;
+
+                foreach (var t in typeEl.EnumerateArray())
                 {
-                    resource.Type = rt;
-                    break;
+                    var str = t.GetString()?.ToLower();
+                    if (str == "importable") imp = true;
+                    if (str == "exportable") exp = true;
                 }
+
+                resource.Type = (imp, exp) switch
+                {
+                    (true, true) => ResourceType.Both,
+                    (true, false) => ResourceType.Importable,
+                    (false, true) => ResourceType.Exportable,
+                    _ => ResourceType.None
+                };
             }
-        }
-        else
-        {
-            resource.Type = ResourceType.None;
-        }
 
-        return resource;
+            return resource;
+        }
     }
-}
 
-public enum ResourceType
-{
-    None,
-    Importable,
-    Exportable,
-    Both
+    public enum ResourceType
+    {
+        None,
+        Importable,
+        Exportable,
+        Both
+    }
 }

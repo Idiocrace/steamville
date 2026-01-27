@@ -1,60 +1,59 @@
-namespace TileGame.Types;
+using System.Collections.Generic;
 
-// Class which represents any ingame tile grid.
-// Used because the old list method was slow and if you wanted to find an adjacent tile you had to iterate through the entire 256 tile map
-// This makes tile lookup and management easier
-public class TileGrid
+namespace TileGame.Types
 {
-    private readonly Dictionary<Vector2, Tile> tiles = [];
-
-    public void PlaceTile(Tile tile, Vector2 position)
+    public class TileGrid
     {
-        tiles[position] = tile;
-    }
+        // IMPORTANT: Explicit type, not [] shorthand (can break older compilers)
+        private readonly Dictionary<Vector2, Tile> tiles = new();
 
-    public void RemoveTile(Vector2 position)
-    {
-        tiles.Remove(position);
-    }
-
-    public Tile? GetTile(Vector2 position)
-    {
-        tiles.TryGetValue(position, out var tile);
-        return tile;
-    }
-
-    public void EditTile(Vector2 position, Tile newTile)
-    {
-        if (tiles.ContainsKey(position))
+        public void PlaceTile(Tile tile, Vector2 position)
         {
-            tiles[position] = newTile;
+            tiles[position] = tile;
         }
-    }
 
-    public Dictionary<Vector2, Tile> GetAllTiles()
-    {
-        return tiles;
-    }
-
-    public Dictionary<Vector2, Tile> GetAdjacentTiles(Vector2 position)
-    {
-        var adjacentPositions = new List<Vector2>
+        public void RemoveTile(Vector2 position)
         {
-            new Vector2(position.X - 1, position.Y),
-            new Vector2(position.X + 1, position.Y),
-            new Vector2(position.X, position.Y - 1),
-            new Vector2(position.X, position.Y + 1)
-        };
+            tiles.Remove(position);
+        }
 
-        var adjacentTiles = new Dictionary<Vector2, Tile>();
-        foreach (var adjacentPosition in adjacentPositions)
+        public Tile? GetTile(Vector2 position)
         {
-            if (tiles.TryGetValue(adjacentPosition, out var tile))
+            tiles.TryGetValue(position, out var tile);
+            return tile;
+        }
+
+        public void EditTile(Vector2 position, Tile newTile)
+        {
+            if (tiles.ContainsKey(position))
+                tiles[position] = newTile;
+        }
+
+        // Return IReadOnlyDictionary to prevent accidental modification
+        public IReadOnlyDictionary<Vector2, Tile> GetAllTiles()
+        {
+            return tiles;
+        }
+
+        public Dictionary<Vector2, Tile> GetAdjacentTiles(Vector2 position)
+        {
+            var adjacentTiles = new Dictionary<Vector2, Tile>();
+
+            Vector2[] offsets =
             {
-                adjacentTiles[adjacentPosition] = tile;
-            }
-        }
+                new Vector2(position.X - 1, position.Y),
+                new Vector2(position.X + 1, position.Y),
+                new Vector2(position.X, position.Y - 1),
+                new Vector2(position.X, position.Y + 1)
+            };
 
-        return adjacentTiles;
+            foreach (var pos in offsets)
+            {
+                if (tiles.TryGetValue(pos, out var tile))
+                    adjacentTiles[pos] = tile;
+            }
+
+            return adjacentTiles;
+        }
     }
 }

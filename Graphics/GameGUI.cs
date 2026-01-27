@@ -143,7 +143,7 @@ namespace TileGame.Graphics
             {
                 switch (mainMenuSelectedIndex)
                 {
-                    case 0: Graphics.SetState(GameState.Playing, "SteamVille - Playing"); break;
+                    case 0: Graphics.SetState(GameState.Playing); break;
                     case 1: inOptions = true; optionSelectedIndex = 0; break;
                     case 2: Graphics.GameWindow.Close(); break;
                 }
