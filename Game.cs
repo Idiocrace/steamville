@@ -1,6 +1,6 @@
 using TileGame;
 
-// Top-level statements - no static Main required!
+// TStart TileGame
 var game = new TileGame.TileGame();
 game.Start();
 

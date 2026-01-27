@@ -11,12 +11,16 @@ namespace TileGame;
 public class TileGame
 {
     // Global runtime state
-    public TileGrid MainGrid = new TileGrid();
+    public TileGrid MainGrid = new();
     public List<Tile> Tiles = [];
     public List<Resource> Resources = [];
-    private readonly object GameLock = new object();
+    private readonly object GameLock = new();
     private bool Running = true;
     private readonly int TickRate = 20; // ticks per second
+    private readonly RichPresenceManager RichPresence = new();
+    public string Phase = "No Phase";
+    public int Money = 0;
+    public List<string> ActiveCheats = [];
     
     // Graphics core
     private GraphicsCore? Graphics;
@@ -96,16 +100,25 @@ public class TileGame
                 Console.WriteLine("Loaded Tile: " + tile.ID);
             }
         }
-        
-
-        Console.WriteLine("Initializing bits and bobs...");
-        int Money = 0; // Player's money
 
         // Temp code to make compiler shut up
-        if (Money == -1) { }
         if (Tiles == null) { }
 
+        // Initialize Rich Presence
+        Console.WriteLine("Initializing Rich Presence...");
+        RichPresence.Enable();
+        RichPresence.UpdatePresence(new Dictionary<string, object>
+        {
+            { "details", "Starting game" },
+            { "state", "Idle" }
+        });
+
         Console.WriteLine("Initialization complete.");
+        RichPresence.UpdatePresence(new Dictionary<string, object>
+        {
+            { "details", "In Main Menu" },
+            { "state", "Idle" }
+        });
     }
 
     public void ProcessAllTiles()
@@ -195,6 +208,39 @@ public class TileGame
             if (tickCounter >= TickRate && Graphics.CurrentState == GameState.Playing)
             {
                 tickCounter = 0;
+            }
+
+            // Update Rich Presence based on game state
+            switch (Graphics.CurrentState)
+            {
+                case GameState.MainMenu:
+                    RichPresence.UpdatePresence(new Dictionary<string, object>
+                    {
+                        { "details", "Idling" },
+                        { "state", "Main Menu" }
+                    });
+                    break;
+                case GameState.Playing:
+                    RichPresence.UpdatePresence(new Dictionary<string, object>
+                    {
+                        { "details", $"${Money} | {Phase}" },
+                        { "state", "In Game" }
+                    });
+                    break;
+                case GameState.Paused:
+                    RichPresence.UpdatePresence(new Dictionary<string, object>
+                    {
+                        { "details", $"${Money} | {Phase}" },
+                        { "state", "Paused" }
+                    });
+                    break;
+                default:
+                    RichPresence.UpdatePresence(new Dictionary<string, object>
+                    {
+                        { "details", $"${Money} | {Phase}" },
+                        { "state", "Idling" }
+                    });
+                    break;
             }
 
             // Sleep briefly to avoid 100% CPU usage

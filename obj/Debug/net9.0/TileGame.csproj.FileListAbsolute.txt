@@ -433,3 +433,5 @@ C:\Users\harve\Downloads\steamville\bin\Debug\net9.0\runtimes\win-x86\native\cim
 C:\Users\harve\Downloads\steamville\obj\Debug\net9.0\TileGame.csproj.Up2Date
 C:\Users\harve\Downloads\steamville\obj\Debug\net9.0\TileGame.genruntimeconfig.cache
 C:\Users\harve\Downloads\steamville\obj\Debug\net9.0\ref\TileGame.dll
+C:\Users\harve\Downloads\steamville\bin\Debug\net9.0\DiscordRPC.dll
+C:\Users\harve\Downloads\steamville\bin\Debug\net9.0\Newtonsoft.Json.dll
