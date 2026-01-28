@@ -35,7 +35,7 @@ namespace TileGame.Graphics
             // Load font
             try
             {
-                GameFont = new Font("Assets/Fonts/font_a.ttf");
+                GameFont = new Font("bcp/assets/font_a.ttf");
             }
             catch
             {
