@@ -14,6 +14,7 @@ public class Tile
     public required string DisplayName { get; set; } = "Base Tile";
     public required Vector2 BoundingBox { get; set; } = new Vector2(1, 1); // width,height
     public Vector3 Position { get; set; } = new Vector3(0, 0, 0); // x,y,rotation (whole numbers 0-3 for quarter turns assuming top-left origin and counterclockwise rotation)
+    public Dictionary<string, Port> Ports { get; set; } = []; // Named ports that pipes can interface with
     // Containers are the most complicated part of tiles due to the amount of specificity needed
     public required Dictionary<string, Container> TileContainers { get; set; } = [];
     public ProcessorData? ProcessorData { get; set; } = null;
@@ -26,6 +27,7 @@ public class Tile
         DisplayName = "Base Tile";
         BoundingBox = new Vector2(1, 1);
         Position = new Vector3(0, 0, 0);
+        Ports = [];
         TileContainers = [];
         ProcessorData = null;
     }
@@ -57,6 +59,28 @@ public class Tile
             { "width", BoundingBox.X },
             { "height", BoundingBox.Y }
         };
+        
+        // Serialize ports
+        if (Ports.Count > 0)
+        {
+            Dictionary<string, object> portsData = [];
+            foreach (var portEntry in Ports)
+            {
+                var portDict = new Dictionary<string, object>
+                {
+                    ["position"] = new Dictionary<string, int>
+                    {
+                        { "x", portEntry.Value.Position.X },
+                        { "y", portEntry.Value.Position.Y }
+                    },
+                    ["type"] = (int)portEntry.Value.Type,
+                    ["containers"] = portEntry.Value.Containers
+                };
+                portsData[portEntry.Key] = portDict;
+            }
+            data["ports"] = portsData;
+        }
+        
         // Container formatting is a bit complex
         Dictionary<string, object> containerData = [];
         // We need to strip the container contents but keep like everything else with the containers
@@ -194,6 +218,54 @@ public class Tile
                         }
                     }
                     tile.TileContainers[contName] = new Container(cap, filter);
+                }
+            }
+
+            // Parse ports
+            if (root.TryGetProperty("ports", out var portsEl) && portsEl.ValueKind == System.Text.Json.JsonValueKind.Object)
+            {
+                foreach (var portProp in portsEl.EnumerateObject())
+                {
+                    string portName = portProp.Name;
+                    var portObj = portProp.Value;
+                    
+                    if (portObj.ValueKind == System.Text.Json.JsonValueKind.Object)
+                    {
+                        Vector2 position = new Vector2(0, 0);
+                        PortType portType = PortType.Output;
+                        List<string> containers = [];
+                        
+                        // Parse position
+                        if (portObj.TryGetProperty("position", out var posEl) && posEl.ValueKind == System.Text.Json.JsonValueKind.Object)
+                        {
+                            int x = 0, y = 0;
+                            if (posEl.TryGetProperty("x", out var xEl) && xEl.TryGetInt32(out var xVal)) x = xVal;
+                            if (posEl.TryGetProperty("y", out var yEl) && yEl.TryGetInt32(out var yVal)) y = yVal;
+                            position = new Vector2(x, y);
+                        }
+                        
+                        // Parse type
+                        if (portObj.TryGetProperty("type", out var typeEl) && typeEl.TryGetInt32(out var typeVal))
+                        {
+                            portType = typeVal == 1 ? PortType.Input : PortType.Output;
+                        }
+                        
+                        // Parse containers
+                        if (portObj.TryGetProperty("containers", out var portContainersEl) && portContainersEl.ValueKind == System.Text.Json.JsonValueKind.Array)
+                        {
+                            containers = portContainersEl.EnumerateArray()
+                                .Where(e => e.ValueKind == System.Text.Json.JsonValueKind.String)
+                                .Select(e => e.GetString()!)
+                                .ToList();
+                        }
+                        
+                        tile.Ports[portName] = new Port
+                        {
+                            Position = position,
+                            Type = portType,
+                            Containers = containers
+                        };
+                    }
                 }
             }
 
@@ -361,9 +433,9 @@ public class Tile
                         Ports = []
                     };
 
-                    if (pdEl.TryGetProperty("ports", out var portsEl) && portsEl.ValueKind == System.Text.Json.JsonValueKind.Array)
+                    if (pdEl.TryGetProperty("ports", out var pipePortsEl) && pipePortsEl.ValueKind == System.Text.Json.JsonValueKind.Array)
                     {
-                        foreach (var item in portsEl.EnumerateArray())
+                        foreach (var item in pipePortsEl.EnumerateArray())
                         {
                             if (item.ValueKind == System.Text.Json.JsonValueKind.String)
                             {

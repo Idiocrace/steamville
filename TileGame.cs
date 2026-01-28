@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 using TileGame.Types;
 using TileGame.Processors;
@@ -11,6 +11,7 @@ namespace TileGame;
 public class TileGame
 {
     // Global runtime state
+    public ContentPack BasePack = new();
     public TileGrid MainGrid = new();
     public List<Tile> Tiles = [];
     public List<Resource> Resources = [];
