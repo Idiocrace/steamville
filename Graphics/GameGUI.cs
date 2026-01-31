@@ -6,231 +6,484 @@ using SFML.Window;
 
 namespace TileGame.Graphics
 {
-    public class GameGUI
+    /// <summary>
+    /// Manages the game's graphical user interface including menus and UI elements.
+    /// </summary>
+    public sealed class GameGUI : IDisposable
     {
-        private GraphicsCore Graphics;
+        #region Constants
 
-        // --- Menu Content ---
-        private List<string> mainMenuItems = new List<string> { "Start Game", "Options", "Quit" };
-        private int mainMenuSelectedIndex = 0;
+        private const float DefaultVolumeValue = 75f;
+        private const float TitleFontSize = 60;
+        private const float MenuItemFontSize = 30;
+        private const float OptionItemFontSize = 24;
+        private const float SliderPercentFontSize = 20;
+        private const float SliderWidth = 200f;
+        private const float SliderHeight = 15f;
+        private const float MenuItemSpacing = 60f;
+        private const float TitleYPosition = 80f;
+        private const float MenuStartYPosition = 200f;
 
-        private List<string> optionItems = new List<string> { "Volume", "Back" };
-        private int optionSelectedIndex = 0;
+        #endregion
 
-        // --- Slider & UI State ---
-        private float volumeValue = 75f; // 0 to 100
-        private bool isDraggingSlider = false;
-        private bool inOptions = false;
+        #region Private Fields
 
-        // --- Input Debouncing ---
-        private bool keyPressed = false;
-        private bool mouseWasPressed = false;
+        private readonly GraphicsCore _graphics;
+        private bool _disposed;
 
+        // Menu content
+        private readonly List<string> _mainMenuItems = new() { "Start Game", "Options", "Quit" };
+        private readonly List<string> _optionItems = new() { "Volume", "Back" };
+
+        // Menu state
+        private int _mainMenuSelectedIndex;
+        private int _optionSelectedIndex;
+        private float _volumeValue = DefaultVolumeValue;
+        private bool _isDraggingSlider;
+        private bool _inOptions;
+        private bool _menuActive = true;
+
+        // Input debouncing
+        private bool _keyPressed;
+        private bool _mouseWasPressed;
+
+        // Reusable SFML objects (to prevent garbage)
+        private Text? _titleText;
+        private readonly List<Text> _cachedMenuTexts = new();
+        private RectangleShape? _sliderBackground;
+        private RectangleShape? _sliderProgress;
+        private Text? _sliderPercentText;
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Initializes a new instance of the GameGUI class.
+        /// </summary>
+        /// <param name="graphics">The graphics core instance.</param>
+        /// <exception cref="ArgumentNullException">Thrown when graphics is null.</exception>
         public GameGUI(GraphicsCore graphics)
         {
-            Graphics = graphics;
+            _graphics = graphics ?? throw new ArgumentNullException(nameof(graphics));
+            InitializeUIElements();
         }
 
+        #endregion
+
+        #region Initialization
+
+        private void InitializeUIElements()
+        {
+            // Initialize title text
+            // Correct order: Text(Font, string, uint)
+            _titleText = new Text(_graphics.GameFont, "SteamVille", (uint)TitleFontSize)
+            {
+                FillColor = Color.White
+            };
+
+            // Initialize slider components
+            _sliderBackground = new RectangleShape(new Vector2f(SliderWidth, SliderHeight))
+            {
+                FillColor = new Color(60, 60, 60),
+                OutlineColor = Color.White,
+                OutlineThickness = 1
+            };
+
+            _sliderProgress = new RectangleShape(new Vector2f(0, SliderHeight))
+            {
+                FillColor = Color.Yellow
+            };
+
+            _sliderPercentText = new Text(_graphics.GameFont, "", (uint)SliderPercentFontSize)
+            {
+                FillColor = Color.White
+            };
+
+            // Pre-allocate menu text objects
+            int maxMenuItems = Math.Max(_mainMenuItems.Count, _optionItems.Count);
+            for (int i = 0; i < maxMenuItems; i++)
+            {
+                _cachedMenuTexts.Add(new Text(_graphics.GameFont, "", (uint)MenuItemFontSize)
+                {
+                    FillColor = Color.White
+                });
+            }
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Updates the main menu state based on user input.
+        /// </summary>
+        /// <exception cref="ObjectDisposedException">Thrown if called after disposal.</exception>
         public void UpdateMainMenu()
         {
-            // Get inputs from your InputManager
+            ThrowIfDisposed();
+
+            if (!_menuActive)
+                return;
+
+            ProcessKeyboardInput();
+            ProcessMouseInput();
+
+            _mouseWasPressed = InputManager.IsMousePressed(Mouse.Button.Left);
+        }
+
+        /// <summary>
+        /// Draws the main menu to the screen.
+        /// </summary>
+        /// <exception cref="ObjectDisposedException">Thrown if called after disposal.</exception>
+        public void DrawMainMenu()
+        {
+            ThrowIfDisposed();
+
+            if (!_menuActive || _titleText == null)
+                return;
+
+            DrawTitle();
+
+            if (_inOptions)
+                DrawOptionsMenu();
+            else
+                DrawMainMenuItems();
+        }
+
+        #endregion
+
+        #region Input Processing
+
+        private void ProcessKeyboardInput()
+        {
             var upPressed = InputManager.IsKeyPressed(Keyboard.Key.Up) || InputManager.IsKeyPressed(Keyboard.Key.W);
             var downPressed = InputManager.IsKeyPressed(Keyboard.Key.Down) || InputManager.IsKeyPressed(Keyboard.Key.S);
             var enterPressed = InputManager.IsKeyPressed(Keyboard.Key.Enter) || InputManager.IsKeyPressed(Keyboard.Key.Space);
-            
-            var mousePos = InputManager.GetMousePosition(Graphics.GameWindow);
-            bool mouseIsDown = InputManager.IsMousePressed(Mouse.Button.Left);
 
-            // --- 1. Keyboard Navigation ---
-            if (!keyPressed && !isDraggingSlider)
+            if (!_keyPressed && !_isDraggingSlider)
             {
                 if (upPressed)
                 {
-                    if (inOptions) optionSelectedIndex = (optionSelectedIndex - 1 + optionItems.Count) % optionItems.Count;
-                    else mainMenuSelectedIndex = (mainMenuSelectedIndex - 1 + mainMenuItems.Count) % mainMenuItems.Count;
-                    keyPressed = true;
+                    NavigateUp();
+                    _keyPressed = true;
                 }
                 else if (downPressed)
                 {
-                    if (inOptions) optionSelectedIndex = (optionSelectedIndex + 1) % optionItems.Count;
-                    else mainMenuSelectedIndex = (mainMenuSelectedIndex + 1) % mainMenuItems.Count;
-                    keyPressed = true;
+                    NavigateDown();
+                    _keyPressed = true;
                 }
                 else if (enterPressed)
                 {
                     HandleSelection();
-                    keyPressed = true;
+                    _keyPressed = true;
                 }
             }
 
-            // Reset keyboard debounce
-            if (!upPressed && !downPressed && !enterPressed) keyPressed = false;
+            if (!upPressed && !downPressed && !enterPressed)
+                _keyPressed = false;
+        }
 
-            // --- 2. Mouse & Slider Logic ---
-            if (inOptions)
-            {
-                for (int j = 0; j < optionItems.Count; j++)
-                {
-                    float xPos = Graphics.WindowSize.X / 2f - 150;
-                    float yPos = 200 + j * 60;
-                    
-                    // Hitbox for the text labels
-                    var labelRect = new FloatRect(new Vector2f(xPos, yPos), new Vector2f(150, 40));
+        private void ProcessMouseInput()
+        {
+            var mousePos = InputManager.GetMousePosition(_graphics.GameWindow);
+            var mouseIsDown = InputManager.IsMousePressed(Mouse.Button.Left);
+            var mousePosF = new Vector2f(mousePos.X, mousePos.Y);
 
-                    if (labelRect.Contains(new Vector2f(mousePos.X, mousePos.Y)))
-                    {
-                        optionSelectedIndex = j;
-                        if (mouseIsDown && !mouseWasPressed && j == 1) HandleSelection(); // Clicked "Back"
-                    }
-
-                    // Special logic for Volume Slider (index 0)
-                    if (j == 0)
-                    {
-                        float sliderX = Graphics.WindowSize.X / 2f + 20;
-                        float sliderWidth = 200;
-                        var sliderRect = new FloatRect(new Vector2f(sliderX, yPos), new Vector2f(sliderWidth, 30));
-
-                        // Start dragging if mouse is clicked inside slider area
-                        if (mouseIsDown && sliderRect.Contains(new Vector2f(mousePos.X, mousePos.Y)))
-                        {
-                            isDraggingSlider = true;
-                            optionSelectedIndex = 0; // Highlight volume if interacting
-                        }
-                    }
-                }
-
-                // Handle active dragging (allows mouse to move outside box while holding)
-                if (isDraggingSlider)
-                {
-                    if (!mouseIsDown)
-                    {
-                        isDraggingSlider = false;
-                    }
-                    else
-                    {
-                        float sliderWidth = 200;
-                        float sliderX = Graphics.WindowSize.X / 2f + 20;
-                        float relativeX = mousePos.X - sliderX;
-                        // Calculate percentage and clamp between 0 and 100
-                        volumeValue = Math.Clamp((relativeX / sliderWidth) * 100f, 0f, 100f);
-                    }
-                }
-            }
+            if (_inOptions)
+                ProcessOptionsMouseInput(mousePosF, mouseIsDown);
             else
+                ProcessMainMenuMouseInput(mousePosF, mouseIsDown);
+        }
+
+        private void ProcessMainMenuMouseInput(Vector2f mousePos, bool mouseIsDown)
+        {
+            for (int i = 0; i < _mainMenuItems.Count; i++)
             {
-                // Main Menu Mouse Logic
-                for (int j = 0; j < mainMenuItems.Count; j++)
+                var rect = GetMainMenuItemRect(i);
+
+                if (rect.Contains(mousePos))
                 {
-                    var rect = new FloatRect(new Vector2f(Graphics.WindowSize.X / 2f - 100, 200 + j * 60), new Vector2f(250, 50));
-                    if (rect.Contains(new Vector2f(mousePos.X, mousePos.Y)))
-                    {
-                        mainMenuSelectedIndex = j;
-                        if (mouseIsDown && !mouseWasPressed) HandleSelection();
-                    }
+                    _mainMenuSelectedIndex = i;
+
+                    if (mouseIsDown && !_mouseWasPressed)
+                        HandleSelection();
                 }
             }
+        }
 
-            mouseWasPressed = mouseIsDown;
+        private void ProcessOptionsMouseInput(Vector2f mousePos, bool mouseIsDown)
+        {
+            for (int i = 0; i < _optionItems.Count; i++)
+            {
+                var labelRect = GetOptionItemRect(i);
+
+                if (labelRect.Contains(mousePos))
+                {
+                    _optionSelectedIndex = i;
+
+                    if (mouseIsDown && !_mouseWasPressed && i == 1) // Back button
+                        HandleSelection();
+                }
+
+                // Volume slider
+                if (i == 0)
+                    ProcessSliderInput(mousePos, mouseIsDown, i);
+            }
+
+            UpdateSliderDrag(mousePos, mouseIsDown);
+        }
+
+        private void ProcessSliderInput(Vector2f mousePos, bool mouseIsDown, int itemIndex)
+        {
+            float sliderX = _graphics.WindowSize.X / 2f + 20;
+            float sliderY = MenuStartYPosition + itemIndex * MenuItemSpacing;
+            var sliderRect = new FloatRect(new Vector2f(sliderX, sliderY), new Vector2f(SliderWidth, 30));
+
+            if (mouseIsDown && sliderRect.Contains(mousePos))
+            {
+                _isDraggingSlider = true;
+                _optionSelectedIndex = 0;
+            }
+        }
+
+        private void UpdateSliderDrag(Vector2f mousePos, bool mouseIsDown)
+        {
+            if (_isDraggingSlider)
+            {
+                if (!mouseIsDown)
+                {
+                    _isDraggingSlider = false;
+                }
+                else
+                {
+                    float sliderX = _graphics.WindowSize.X / 2f + 20;
+                    float relativeX = mousePos.X - sliderX;
+                    _volumeValue = Math.Clamp((relativeX / SliderWidth) * 100f, 0f, 100f);
+                }
+            }
+        }
+
+        #endregion
+
+        #region Navigation
+
+        private void NavigateUp()
+        {
+            if (_inOptions)
+                _optionSelectedIndex = (_optionSelectedIndex - 1 + _optionItems.Count) % _optionItems.Count;
+            else
+                _mainMenuSelectedIndex = (_mainMenuSelectedIndex - 1 + _mainMenuItems.Count) % _mainMenuItems.Count;
+        }
+
+        private void NavigateDown()
+        {
+            if (_inOptions)
+                _optionSelectedIndex = (_optionSelectedIndex + 1) % _optionItems.Count;
+            else
+                _mainMenuSelectedIndex = (_mainMenuSelectedIndex + 1) % _mainMenuItems.Count;
         }
 
         private void HandleSelection()
         {
-            if (inOptions)
+            if (_inOptions)
             {
-                if (optionSelectedIndex == 1) inOptions = false; // Back to Main
+                if (_optionSelectedIndex == 1) // Back
+                    _inOptions = false;
             }
             else
             {
-                switch (mainMenuSelectedIndex)
+                switch (_mainMenuSelectedIndex)
                 {
-                    case 0: Graphics.SetState(GameState.Playing, "SteamVille - Playing"); break;
-                    case 1: inOptions = true; optionSelectedIndex = 0; break;
-                    case 2: Graphics.GameWindow.Close(); break;
+                    case 0: // Start Game
+                        StartGame();
+                        break;
+
+                    case 1: // Options
+                        OpenOptions();
+                        break;
+
+                    case 2: // Quit
+                        QuitGame();
+                        break;
                 }
             }
         }
 
-        public void DrawMainMenu()
+        private void StartGame()
         {
-            // Draw Title
-            Text title = new Text(Graphics.GameFont, "SteamVille", 60)
+            _graphics.SetState(GameState.Playing, "SteamVille - Playing");
+            _menuActive = false;
+            _keyPressed = true;
+            _mouseWasPressed = true;
+            _inOptions = false;
+
+            Console.WriteLine("Game started from menu.");
+        }
+
+        private void OpenOptions()
+        {
+            _inOptions = true;
+            _optionSelectedIndex = 0;
+        }
+
+        private void QuitGame()
+        {
+            Console.WriteLine("Quit selected from menu.");
+            _graphics.GameWindow.Close();
+        }
+
+        #endregion
+
+        #region Drawing
+
+        private void DrawTitle()
+        {
+            if (_titleText == null) return;
+
+            _titleText.Position = new Vector2f(
+                _graphics.WindowSize.X / 2f - 150,
+                TitleYPosition
+            );
+
+            _graphics.DrawText(_titleText);
+        }
+
+        private void DrawMainMenuItems()
+        {
+            for (int i = 0; i < _mainMenuItems.Count; i++)
             {
-                Position = new Vector2f(Graphics.WindowSize.X / 2f - 150, 80),
-                FillColor = Color.White
-            };
-            Graphics.DrawText(title);
+                var text = _cachedMenuTexts[i];
+                var isSelected = i == _mainMenuSelectedIndex;
 
-            if (inOptions)
-            {
-                for (int j = 0; j < optionItems.Count; j++)
-                {
-                    var color = (j == optionSelectedIndex) ? Color.Yellow : Color.White;
-                    float yPos = 200 + j * 60;
+                text.DisplayedString = (isSelected ? "> " : "  ") + _mainMenuItems[i];
+                text.FillColor = isSelected ? Color.Yellow : Color.White;
+                text.CharacterSize = (uint)MenuItemFontSize;
+                text.Position = new Vector2f(
+                    _graphics.WindowSize.X / 2f - 100,
+                    MenuStartYPosition + i * MenuItemSpacing
+                );
 
-                    Text text = new Text(Graphics.GameFont, optionItems[j], 24)
-                    {
-                        Position = new Vector2f(Graphics.WindowSize.X / 2f - 150, yPos),
-                        FillColor = color
-                    };
-                    Graphics.DrawText(text);
-
-                    // If this is the volume row, draw the slider next to it
-                    if (j == 0)
-                    {
-                        DrawSlider(Graphics.WindowSize.X / 2f + 20, yPos + 10, volumeValue, color);
-                    }
-                }
+                _graphics.DrawText(text);
             }
-            else
+        }
+
+        private void DrawOptionsMenu()
+        {
+            for (int i = 0; i < _optionItems.Count; i++)
             {
-                // Draw Main Menu List
-                for (int j = 0; j < mainMenuItems.Count; j++)
-                {
-                    var color = (j == mainMenuSelectedIndex) ? Color.Yellow : Color.White;
-                    string prefix = (j == mainMenuSelectedIndex) ? "> " : "  ";
-                    
-                    Text menuItem = new Text(Graphics.GameFont, prefix + mainMenuItems[j], 30)
-                    {
-                        Position = new Vector2f(Graphics.WindowSize.X / 2f - 100, 200 + j * 60),
-                        FillColor = color
-                    };
-                    Graphics.DrawText(menuItem);
-                }
+                var isSelected = i == _optionSelectedIndex;
+                var color = isSelected ? Color.Yellow : Color.White;
+                float yPos = MenuStartYPosition + i * MenuItemSpacing;
+
+                var text = _cachedMenuTexts[i];
+                text.DisplayedString = _optionItems[i];
+                text.FillColor = color;
+                text.CharacterSize = (uint)OptionItemFontSize;
+                text.Position = new Vector2f(_graphics.WindowSize.X / 2f - 150, yPos);
+
+                _graphics.DrawText(text);
+
+                // Draw slider for volume option
+                if (i == 0)
+                    DrawSlider(_graphics.WindowSize.X / 2f + 20, yPos + 10, _volumeValue, color);
             }
         }
 
         private void DrawSlider(float x, float y, float value, Color highlightColor)
         {
-            float width = 200;
-            float height = 15;
+            if (_sliderBackground == null || _sliderProgress == null || _sliderPercentText == null)
+                return;
 
-            // Slider Background
-            RectangleShape bg = new RectangleShape(new Vector2f(width, height))
-            {
-                Position = new Vector2f(x, y),
-                FillColor = new Color(60, 60, 60),
-                OutlineColor = Color.White,
-                OutlineThickness = 1
-            };
-            
-            // Slider Progress (Fill)
-            RectangleShape progress = new RectangleShape(new Vector2f((value / 100f) * width, height))
-            {
-                Position = new Vector2f(x, y),
-                FillColor = Color.Yellow
-            };
+            // Update positions
+            _sliderBackground.Position = new Vector2f(x, y);
+            _sliderProgress.Position = new Vector2f(x, y);
+            _sliderProgress.Size = new Vector2f((value / 100f) * SliderWidth, SliderHeight);
 
-            // Percentage Text
-            string percentString = ((int)value).ToString() + "%";
-            Text percentText = new Text(Graphics.GameFont, percentString, 20)
-            {
-                Position = new Vector2f(x + width + 15, y - 6),
-                FillColor = highlightColor
-            };
+            _sliderPercentText.DisplayedString = $"{(int)value}%";
+            _sliderPercentText.FillColor = highlightColor;
+            _sliderPercentText.Position = new Vector2f(x + SliderWidth + 15, y - 6);
 
-            Graphics.GameWindow.Draw(bg);
-            Graphics.GameWindow.Draw(progress);
-            Graphics.DrawText(percentText);
+            // Draw
+            _graphics.GameWindow.Draw(_sliderBackground);
+            _graphics.GameWindow.Draw(_sliderProgress);
+            _graphics.DrawText(_sliderPercentText);
         }
+
+        #endregion
+
+        #region Helper Methods
+
+        private FloatRect GetMainMenuItemRect(int index)
+        {
+            return new FloatRect(
+                new Vector2f(_graphics.WindowSize.X / 2f - 100, MenuStartYPosition + index * MenuItemSpacing),
+                new Vector2f(250, 50)
+            );
+        }
+
+        private FloatRect GetOptionItemRect(int index)
+        {
+            float xPos = _graphics.WindowSize.X / 2f - 150;
+            float yPos = MenuStartYPosition + index * MenuItemSpacing;
+            return new FloatRect(new Vector2f(xPos, yPos), new Vector2f(150, 40));
+        }
+
+        private void ThrowIfDisposed()
+        {
+            if (_disposed)
+                throw new ObjectDisposedException(nameof(GameGUI));
+        }
+
+        #endregion
+
+        #region IDisposable Implementation
+
+        /// <summary>
+        /// Releases all resources used by the GameGUI.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Releases unmanaged and optionally managed resources.
+        /// </summary>
+        /// <param name="disposing">True to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+        private void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+
+            if (disposing)
+            {
+                // Dispose all SFML objects
+                _titleText?.Dispose();
+                _sliderBackground?.Dispose();
+                _sliderProgress?.Dispose();
+                _sliderPercentText?.Dispose();
+
+                foreach (var text in _cachedMenuTexts)
+                    text?.Dispose();
+
+                _cachedMenuTexts.Clear();
+
+                Console.WriteLine("GameGUI disposed.");
+            }
+
+            _disposed = true;
+        }
+
+        /// <summary>
+        /// Finalizer to ensure resources are cleaned up if Dispose is not called.
+        /// </summary>
+        ~GameGUI()
+        {
+            Dispose(false);
+        }
+
+        #endregion
     }
 }
