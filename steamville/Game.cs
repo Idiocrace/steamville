@@ -5,46 +5,48 @@ using Crucible.Graphics;
 
 namespace Crucible
 {
-    public class Game
+    public class Game : IDisposable
     {
         private readonly GraphicsCore _graphics;
+        private readonly Text _welcomeText;
 
         public Game()
         {
-            // Initialize the graphics core (window opens here)
+            // Initialize graphics core
             _graphics = new GraphicsCore(800, 600, "Crucible Game", 60);
+
+            // Initialize text once
+            _welcomeText = new Text(_graphics.GameFont, "Welcome to Crucible!", 30)
+            {
+                FillColor = Color.White,
+                Position = new Vector2f(100, 100)
+            };
         }
 
         public void Run()
         {
-            // Main game loop
             while (_graphics.IsRunning)
             {
-                // Handle window events
                 _graphics.PollEvents();
-
-                // Clear the window for this frame
                 _graphics.BeginFrame();
 
-                // Example: Draw some text
-                var text = new Text(_graphics.GameFont, "Welcome to Crucible!", 30)
-                {
-                    FillColor = Color.White,
-                    Position = new Vector2f(100, 100)
-                };
-                _graphics.DrawText(text);
+                // Draw the reusable text
+                _graphics.DrawText(_welcomeText);
 
-                // Display the frame
                 _graphics.EndFrame();
             }
+        }
 
-            // Dispose graphics core when done
+        public void Dispose()
+        {
+            // Dispose all disposable objects
+            _welcomeText.Dispose();
             _graphics.Dispose();
         }
 
         static void Main()
         {
-            var game = new Game();
+            using var game = new Game(); // Dispose prolly
             game.Run();
         }
     }
