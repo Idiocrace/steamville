@@ -401,32 +401,32 @@
           "runtimes/win-arm64/native/msvcp140.dll": {
             "rid": "win-arm64",
             "assetType": "native",
-            "fileVersion": "14.44.35211.0"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-arm64/native/sfml-audio-3.dll": {
             "rid": "win-arm64",
             "assetType": "native",
-            "fileVersion": "3.0.2.0"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-arm64/native/sfml-graphics-3.dll": {
             "rid": "win-arm64",
             "assetType": "native",
-            "fileVersion": "3.0.2.0"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-arm64/native/sfml-system-3.dll": {
             "rid": "win-arm64",
             "assetType": "native",
-            "fileVersion": "3.0.2.0"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-arm64/native/sfml-window-3.dll": {
             "rid": "win-arm64",
             "assetType": "native",
-            "fileVersion": "3.0.2.0"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-arm64/native/vcruntime140.dll": {
             "rid": "win-arm64",
             "assetType": "native",
-            "fileVersion": "14.44.35211.0"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x64/native/csfml-audio.dll": {
             "rid": "win-x64",
@@ -451,37 +451,37 @@
           "runtimes/win-x64/native/msvcp140.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "14.44.35211.0"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x64/native/sfml-audio-3.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "3.0.2.0"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x64/native/sfml-graphics-3.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "3.0.2.0"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x64/native/sfml-system-3.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "3.0.2.0"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x64/native/sfml-window-3.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "3.0.2.0"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x64/native/vcruntime140.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "14.44.35211.0"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x64/native/vcruntime140_1.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "14.44.35211.0"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x86/native/csfml-audio.dll": {
             "rid": "win-x86",
@@ -506,32 +506,32 @@
           "runtimes/win-x86/native/msvcp140.dll": {
             "rid": "win-x86",
             "assetType": "native",
-            "fileVersion": "14.44.35211.0"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x86/native/sfml-audio-3.dll": {
             "rid": "win-x86",
             "assetType": "native",
-            "fileVersion": "3.0.2.0"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x86/native/sfml-graphics-3.dll": {
             "rid": "win-x86",
             "assetType": "native",
-            "fileVersion": "3.0.2.0"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x86/native/sfml-system-3.dll": {
             "rid": "win-x86",
             "assetType": "native",
-            "fileVersion": "3.0.2.0"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x86/native/sfml-window-3.dll": {
             "rid": "win-x86",
             "assetType": "native",
-            "fileVersion": "3.0.2.0"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x86/native/vcruntime140.dll": {
             "rid": "win-x86",
             "assetType": "native",
-            "fileVersion": "14.44.35211.0"
+            "fileVersion": "0.0.0.0"
           }
         }
       },

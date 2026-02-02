@@ -1,13 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<!--FOR MACOS ONLY FUCK YOU HARVEY-->
+
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    
-    <!-- Store dependencies in Libs subdirectory -->
-    <ProbesPaths>Libs</ProbesPaths>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,13 +14,20 @@
     <PackageReference Include="DiscordRichPresence" Version="1.6.1.70" />
   </ItemGroup>
 
-  <!-- Copy dependencies to Libs folder after build -->
-  <Target Name="CopyDependenciesToLibs" AfterTargets="Build">
+  <!-- Platform-specific settings -->
+  <PropertyGroup Condition="'$(OS)' == 'Unix'">
+    <!-- macOS is Unix-based -->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <RuntimeIdentifier>osx-x64</RuntimeIdentifier> <!-- or osx-arm64 if Apple Silicon -->
+  </PropertyGroup>
+
+  <!-- Copy dependencies to Libs folder after build (macOS only) -->
+  <Target Name="CopyDependenciesToLibs" AfterTargets="Build" Condition="'$(OS)' == 'Unix'">
     <ItemGroup>
       <DependencyFiles Include="$(OutputPath)*.dll" Exclude="$(OutputPath)$(AssemblyName).dll" />
     </ItemGroup>
     <MakeDir Directories="$(OutputPath)Libs" />
-    <Move SourceFiles="@(DependencyFiles)" DestinationFolder="$(OutputPath)Libs" OverwriteReadOnlyFiles="true" />
+    <Copy SourceFiles="@(DependencyFiles)" DestinationFolder="$(OutputPath)Libs" />
   </Target>
 
 </Project>
