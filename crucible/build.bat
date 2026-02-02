@@ -1,4 +1,4 @@
-@echo off
+-@echo off
 REM Build and package Crucible as a library + publish runtime build
 setlocal
 

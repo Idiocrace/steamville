@@ -1,13 +1,13 @@
 # -----------------------------
 # Build / output
 # -----------------------------
-/[Bb]in/
-/[Oo]bj/
-obj/**/
-publish/
-out/
-artifacts/
-ref/
+**/[Bb]in/
+**/[Oo]bj/
+**/obj/
+**/publish/
+**/out/
+**/artifacts/
+**/ref/
 
 # -----------------------------
 # Visual Studio / IDEs
