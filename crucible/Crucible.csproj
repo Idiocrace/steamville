@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <!-- Package metadata for publishing as an engine/library -->
+    <PackageId>TileEngine</PackageId>
+    <Version>0.1</Version>
+    <Authors>Pixelated Dream, Raven Studios</Authors>
+    <Description>A 2D engine for </Description>
+    <PackageLicenseExpression>PDSARL-1.0</PackageLicenseExpression>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SFML.Net" Version="3.0.0" />
+  </ItemGroup>
+
+</Project>

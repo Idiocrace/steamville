@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    
+    <!-- Store dependencies in Libs subdirectory -->
+    <ProbesPaths>Libs</ProbesPaths>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Crucible\Crucible.csproj" />
+    <PackageReference Include="DiscordRichPresence" Version="1.6.1.70" />
+  </ItemGroup>
+
+  <!-- Copy dependencies to Libs folder after build -->
+  <Target Name="CopyDependenciesToLibs" AfterTargets="Build">
+    <ItemGroup>
+      <DependencyFiles Include="$(OutputPath)*.dll" Exclude="$(OutputPath)$(AssemblyName).dll" />
+    </ItemGroup>
+    <MakeDir Directories="$(OutputPath)Libs" />
+    <Move SourceFiles="@(DependencyFiles)" DestinationFolder="$(OutputPath)Libs" OverwriteReadOnlyFiles="true" />
+  </Target>
+
+</Project>

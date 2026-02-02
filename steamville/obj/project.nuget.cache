@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "4BBwGY9LqSg=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\jessj\\Downloads\\steamville\\steamville.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\jessj\\.nuget\\packages\\csfml\\3.0.0\\csfml.3.0.0.nupkg.sha512",
+    "C:\\Users\\jessj\\.nuget\\packages\\discordrichpresence\\1.6.1.70\\discordrichpresence.1.6.1.70.nupkg.sha512",
+    "C:\\Users\\jessj\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\jessj\\.nuget\\packages\\sfml.audio\\3.0.0\\sfml.audio.3.0.0.nupkg.sha512",
+    "C:\\Users\\jessj\\.nuget\\packages\\sfml.graphics\\3.0.0\\sfml.graphics.3.0.0.nupkg.sha512",
+    "C:\\Users\\jessj\\.nuget\\packages\\sfml.net\\3.0.0\\sfml.net.3.0.0.nupkg.sha512",
+    "C:\\Users\\jessj\\.nuget\\packages\\sfml.system\\3.0.0\\sfml.system.3.0.0.nupkg.sha512",
+    "C:\\Users\\jessj\\.nuget\\packages\\sfml.window\\3.0.0\\sfml.window.3.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

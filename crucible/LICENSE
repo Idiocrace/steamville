@@ -1,0 +1,349 @@
+**PIXELATED DREAM / RAVEN STUDIOS
+SOURCE-AVAILABLE REFERENCE LICENSE (PDSARL) v1.0**
+
+Copyright © 2026 Pixelated Dream / Raven Studios.
+All rights reserved.
+
+IMPORTANT — READ CAREFULLY: This License constitutes a legally binding agreement ("Agreement") between Pixelated Dream / Raven Studios ("Licensor") and any individual or legal entity ("Licensee") that accesses, uses, compiles, or distributes the Software, its Source Code, or any Compiled Derivative thereof. By accessing, using, or distributing the Software, Source Code, or any Compiled Derivative, the Licensee agrees to be bound by the terms of this License. If the Licensee does not agree to these terms, the Licensee must not access, use, or distribute the Software, Source Code, or any Compiled Derivative.
+
+================================================================================
+SECTION 1: DEFINITIONS
+================================================================================
+
+For purposes of this License, the following terms shall have the meanings set forth below:
+
+1.1 "Software" means the proprietary compiled software provided in binary form by Pixelated Dream / Raven Studios, including but not limited to any DLLs, executables, libraries, runtime components, tools, assets, and associated documentation.
+
+1.2 "Source Code" means the human-readable source files made available alongside the Software, including all code, scripts, configuration files, build files, and related technical documentation.
+
+1.3 "Compiled Derivative" means a binary produced by compiling the Source Code without any modification, alteration, omission, addition, annotation, refactoring, optimization, or other change whatsoever. A Compiled Derivative must be functionally and structurally identical to the official Software binary.
+
+1.4 "Licensee" means any individual or legal entity that accesses, uses, compiles, or distributes the Software, Source Code, Compiled Derivative, or any Product built thereon.
+
+1.5 "Product" means any software application, game, tool, or other work developed using the Software.
+
+1.6 "Contaminated Copy" means any Software binary, Compiled Derivative, Product, or software artifact that violates any condition of this License, including but not limited to: unauthorized modifications of the Source Code; unauthorized redistribution; failure to provide required attribution; or any other breach of this Agreement.
+
+1.7 "Confidential Information" means the Source Code and any technical, architectural, algorithmic, or design information contained therein, which constitutes proprietary trade secrets of Pixelated Dream / Raven Studios.
+
+1.8 "Material Breach" means any violation of Sections 3, 4, 5, 6, or 7 of this License, or any other violation that substantially impairs the rights of Pixelated Dream / Raven Studios.
+
+================================================================================
+SECTION 2: OWNERSHIP AND INTELLECTUAL PROPERTY RIGHTS
+================================================================================
+
+2.1 Exclusive Ownership
+The Software, Source Code, all Compiled Derivatives, and all intellectual property rights therein are and shall remain the exclusive property of Pixelated Dream / Raven Studios. This includes, without limitation:
+
+   a. All copyrights, including rights in derivative works under Title 17 of the United States Code;
+   b. All trade secrets and proprietary information;
+   c. All trademarks, service marks, trade names, and logos associated with the Software;
+   d. All patents and patent applications related to the Software;
+   e. All moral rights to the extent recognized under applicable law.
+
+2.2 No Transfer of Ownership
+No ownership rights, title, or interest in or to the Software, Source Code, or Compiled Derivatives are transferred to the Licensee under this License. The Licensee acknowledges that this License grants only a limited, revocable permission to use the Software and Source Code as expressly set forth herein.
+
+2.3 Copyright Protection
+The Software, Source Code, and all Compiled Derivatives are protected by United States copyright law (Title 17, U.S.C.), international copyright treaties, and the copyright laws of other jurisdictions. Unauthorized reproduction, distribution, modification, or creation of derivative works is strictly prohibited and constitutes copyright infringement.
+
+2.4 Reservation of Rights
+All rights not expressly granted herein are reserved by Pixelated Dream / Raven Studios.
+
+================================================================================
+SECTION 3: GRANT OF LIMITED LICENSE
+================================================================================
+
+3.1 License Grant
+Subject to full and continuous compliance with all terms and conditions of this License, Pixelated Dream / Raven Studios hereby grants to the Licensee a limited, non-exclusive, non-transferable, non-sublicensable, revocable license to:
+
+   a. Use the unmodified Software binary solely for the purpose of developing and distributing Products;
+   b. Access and view the Source Code solely for reference and documentation purposes;
+   c. Compile the Source Code solely to produce a Compiled Derivative, provided that:
+      (i)   The Source Code is compiled verbatim, without any modification whatsoever;
+      (ii)  The Compiled Derivative is used solely for internal validation, testing, or verification purposes;
+      (iii) The Compiled Derivative is not distributed, published, or made available to any third party.
+
+3.2 No Other Rights
+No other rights are granted under this License, whether expressly, impliedly, by estoppel, or otherwise. Any use of the Software, Source Code, or Compiled Derivative not expressly authorized herein is strictly prohibited.
+
+3.3 Revocability
+This license is revocable at any time by Pixelated Dream / Raven Studios, with or without cause, upon written notice to the Licensee. Upon revocation, all rights granted hereunder shall immediately terminate.
+
+3.4 Non-Transferability
+The Licensee shall not assign, transfer, sublicense, lease, rent, or otherwise convey any rights granted under this License to any third party without the prior written consent of Pixelated Dream / Raven Studios, which consent may be withheld in its sole discretion.
+
+================================================================================
+SECTION 4: SOURCE CODE RESTRICTIONS AND TRADE SECRET PROTECTION
+================================================================================
+
+4.1 Confidential and Proprietary Nature
+The Licensee acknowledges and agrees that the Source Code constitutes valuable trade secrets and Confidential Information of Pixelated Dream / Raven Studios, protected under the Defend Trade Secrets Act (18 U.S.C. § 1836 et seq.), the Restatement of Torts, and applicable state trade secret laws.
+
+4.2 Permitted Use of Source Code
+The Source Code is provided solely for documentation and reference purposes. The Licensee may:
+
+   a. Read and study the Source Code to understand the Software's functionality;
+   b. Compile the Source Code to produce a Compiled Derivative for internal validation only.
+
+4.3 Prohibited Acts
+The Licensee shall not, and shall not permit, authorize, or enable any third party to:
+
+   a. Modify, adapt, translate, annotate, refactor, optimize, enhance, or otherwise alter the Source Code in any manner;
+   b. Create derivative works of the Source Code other than a Compiled Derivative as defined herein;
+   c. Combine, merge, integrate, or link the Source Code with any third-party code, libraries, or software prior to or during compilation;
+   d. Use the Source Code or any Compiled Derivative to create, develop, improve, inform, or contribute to the development of any engine, framework, library, tool, or competing software product;
+   e. Redistribute, publish, disclose, transmit, or otherwise make available the Source Code or any Compiled Derivative to any third party, whether modified or unmodified, whether for commercial or non-commercial purposes;
+   f. Use the Source Code or any knowledge gained therefrom to reverse engineer, replicate, or create functional equivalents of the Software;
+   g. Disclose, reveal, or communicate any Confidential Information contained in the Source Code to any third party;
+   h. Use the Source Code for any purpose other than those expressly permitted in Section 4.2.
+
+4.4 Compilation Restrictions
+Compilation of the Source Code is permitted only where:
+
+   a. The resulting output is a Compiled Derivative that is functionally and structurally identical to the official Software binary;
+   b. No modifications, additions, omissions, or alterations of any kind are made to the Source Code;
+   c. The Compiled Derivative is used solely for internal purposes and is not distributed.
+
+================================================================================
+SECTION 5: SOFTWARE BINARY RESTRICTIONS
+================================================================================
+
+5.1 Prohibited Acts
+The Licensee shall not:
+
+   a. Modify, alter, patch, or tamper with the Software binary in any manner;
+   b. Reverse engineer, decompile, disassemble, or otherwise attempt to derive the source code of the Software binary, except to the minimum extent that such restriction is expressly prohibited by applicable law and only after providing written notice to Pixelated Dream / Raven Studios;
+   c. Replace, bypass, substitute, or override the Software binary with any alternative implementation, including any unauthorized Compiled Derivative;
+   d. Redistribute the Software binary or any Compiled Derivative as a standalone product, component, library, or module independent of a Product;
+   e. Remove, alter, or obscure any proprietary notices, labels, or markings on the Software binary;
+   f. Use the Software binary in any manner that violates applicable law or infringes the rights of any third party.
+
+================================================================================
+SECTION 6: ATTRIBUTION AND MORAL RIGHTS
+================================================================================
+
+6.1 Mandatory Attribution
+Any Product distributed using the Software must include clear and visible attribution to "Pixelated Dream" and/or "Raven Studios" (as applicable). Such attribution must appear in:
+
+   a. The Product's credits screen or equivalent prominent location within the Product;
+   b. The Product's accompanying documentation, README files, or "About" section;
+   c. Any publicly accessible store page, website, or promotional material for the Product.
+
+6.2 Attribution Format
+The attribution must be clearly legible, displayed in a font size and style comparable to other credits, and must include at minimum the following text:
+
+   "Powered by [Software Name] © Pixelated Dream / Raven Studios"
+
+   Where [Software Name] shall be replaced with the official name of the Software as designated by Pixelated Dream / Raven Studios.
+
+6.3 Exception for Internal Use
+The attribution requirement does not apply to Products developed and distributed solely by Pixelated Dream or Raven Studios for their own internal or commercial purposes.
+
+6.4 Material Breach
+Failure to provide the required attribution as specified herein constitutes a Material Breach of this License and shall trigger the enforcement and termination provisions set forth in Section 9.
+
+6.5 Moral Rights
+The Licensee acknowledges the moral rights of Pixelated Dream / Raven Studios to be identified as the creator of the Software and to have the integrity of the Software protected. The Licensee shall not take any action that would harm the reputation or integrity of the Software or its creators.
+
+================================================================================
+SECTION 7: DISTRIBUTION ON DIGITAL PLATFORMS
+================================================================================
+
+7.1 Permitted Distribution
+Products developed using the Software may be distributed through digital distribution platforms, including but not limited to Steam, Epic Games Store, GOG, itch.io, and similar platforms, provided that all of the following conditions are satisfied:
+
+   a. The Software is included only as an embedded, integral component of the Product and is not separately accessible or extractable;
+   b. Neither the Source Code nor any Compiled Derivative is distributed, included, or made accessible in any form;
+   c. All attribution requirements specified in Section 6 are fully satisfied;
+   d. The Product complies with all applicable platform terms of service and distribution policies;
+   e. The Licensee does not represent or imply that the Product is endorsed, certified, or approved by Pixelated Dream / Raven Studios (unless such endorsement has been expressly granted in writing).
+
+7.2 Prohibited Distribution
+The Licensee shall not:
+
+   a. Distribute the Software, Source Code, or any Compiled Derivative as a standalone download, library, SDK, or development tool;
+   b. Include the Source Code or any Compiled Derivative in any public repository, package manager, or distribution channel;
+   c. Enable, facilitate, or permit any third party to extract, access, or obtain the Software binary separately from the Product.
+
+7.3 Platform Compliance
+The Licensee is solely responsible for ensuring compliance with all applicable platform distribution policies, including but not limited to Steamworks distribution policies. Pixelated Dream / Raven Studios shall not be liable for any platform-related issues arising from the Licensee's distribution of Products.
+
+================================================================================
+SECTION 8: BINDING AGREEMENT AND CONTRACT FORMATION
+================================================================================
+
+8.1 Contract Formation
+By accessing, downloading, using, compiling, or distributing the Software, Source Code, or any Compiled Derivative, the Licensee accepts and agrees to be bound by all terms and conditions of this License. This License constitutes a legally binding agreement between Pixelated Dream / Raven Studios and the Licensee.
+
+8.2 Capacity
+The Licensee represents and warrants that:
+
+   a. The Licensee has the legal capacity and authority to enter into this Agreement;
+   b. If the Licensee is acting on behalf of an organization, the Licensee has the authority to bind that organization to this Agreement;
+   c. The Licensee is of legal age in their jurisdiction to enter into binding contracts.
+
+8.3 Acceptance
+Acceptance of this License may be demonstrated by any of the following:
+
+   a. Downloading or accessing the Software or Source Code;
+   b. Using the Software to develop a Product;
+   c. Compiling the Source Code;
+   d. Distributing a Product built with the Software;
+   e. Clicking "I Accept" or similar affirmation if presented.
+
+================================================================================
+SECTION 9: CONTAMINATION, ENFORCEMENT, AND TERMINATION
+================================================================================
+
+9.1 Contamination
+Any violation of this License involving the Source Code, Software, or any Compiled Derivative shall render the affected Software, Compiled Derivative, and any Product containing or derived therefrom a "Contaminated Copy." The creation, use, or distribution of a Contaminated Copy constitutes a Material Breach of this License.
+
+9.2 Automatic Termination
+This License shall automatically terminate, without notice, upon:
+
+   a. The creation, use, or distribution of a Contaminated Copy;
+   b. Any Material Breach of this License;
+   c. Any unauthorized modification of the Source Code;
+   d. Any unauthorized redistribution of the Source Code, Software, or Compiled Derivative;
+   e. Failure to provide required attribution.
+
+9.3 Discretionary Termination
+Pixelated Dream / Raven Studios reserve the right to immediately terminate this License at any time, with or without cause, upon written notice to the Licensee.
+
+9.4 Remedies Upon Termination
+Upon termination of this License for any reason, Pixelated Dream / Raven Studios may, in their sole discretion, require the Licensee to:
+
+   a. Immediately cease all development, distribution, marketing, and support of any Product containing the Software or any Contaminated Copy;
+   b. Destroy all copies of the Software, Source Code, Compiled Derivatives, and any Contaminated Copies in the Licensee's possession, custody, or control;
+   c. Remove and delete the Software from any affected Product and all distribution channels;
+   d. Provide written certification of compliance with the foregoing requirements;
+   e. Pay damages, costs, and attorneys' fees incurred by Pixelated Dream / Raven Studios.
+
+9.5 Extended Restrictions for Egregious Violations
+In cases of willful, repeated, egregious, or bad-faith violations, Pixelated Dream / Raven Studios reserve the right to:
+
+   a. Permanently revoke the Licensee's right to use the Software in any future projects;
+   b. Restrict or revoke the Licensee's access to or use of other software products owned, developed, or distributed by Pixelated Dream or Raven Studios;
+   c. Pursue all available legal remedies, including injunctive relief, damages, and recovery of attorneys' fees.
+
+9.6 Survival
+The following sections shall survive termination of this License: Sections 1, 2, 4.1, 6.5, 9, 10, 11, 12, 13, and 14.
+
+9.7 No Waiver
+Failure by Pixelated Dream / Raven Studios to enforce any provision of this License shall not constitute a waiver of that provision or any other provision. Any waiver must be in writing and signed by an authorized representative of Pixelated Dream / Raven Studios.
+
+================================================================================
+SECTION 10: DISCLAIMER OF WARRANTIES
+================================================================================
+
+10.1 "AS IS" Provision
+THE SOFTWARE, SOURCE CODE, COMPILED DERIVATIVES, AND ALL RELATED MATERIALS ARE PROVIDED "AS IS" AND "AS AVAILABLE," WITHOUT WARRANTY OF ANY KIND, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE.
+
+10.2 Disclaimer of Implied Warranties
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, PIXELATED DREAM / RAVEN STUDIOS EXPRESSLY DISCLAIM ALL WARRANTIES, INCLUDING BUT NOT LIMITED TO:
+
+   a. IMPLIED WARRANTIES OF MERCHANTABILITY;
+   b. IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE;
+   c. IMPLIED WARRANTIES OF NON-INFRINGEMENT;
+   d. IMPLIED WARRANTIES OF TITLE;
+   e. IMPLIED WARRANTIES ARISING FROM COURSE OF DEALING OR USAGE OF TRADE;
+   f. WARRANTIES THAT THE SOFTWARE WILL BE UNINTERRUPTED, ERROR-FREE, SECURE, OR FREE OF VIRUSES OR OTHER HARMFUL COMPONENTS.
+
+10.3 No Warranty of Accuracy
+PIXELATED DREAM / RAVEN STUDIOS DO NOT WARRANT THAT THE SOFTWARE, SOURCE CODE, OR ANY COMPILED DERIVATIVE WILL MEET THE LICENSEE'S REQUIREMENTS OR EXPECTATIONS, OR THAT ANY ERRORS OR DEFECTS WILL BE CORRECTED.
+
+10.4 Assumption of Risk
+THE LICENSEE ASSUMES ALL RISK AND RESPONSIBILITY FOR THE SELECTION, INSTALLATION, USE, AND RESULTS OBTAINED FROM THE SOFTWARE, SOURCE CODE, AND ANY COMPILED DERIVATIVE.
+
+================================================================================
+SECTION 11: LIMITATION OF LIABILITY
+================================================================================
+
+11.1 Exclusion of Damages
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL PIXELATED DREAM, RAVEN STUDIOS, OR THEIR RESPECTIVE OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, AFFILIATES, SUCCESSORS, OR ASSIGNS BE LIABLE FOR ANY:
+
+   a. INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, PUNITIVE, OR EXEMPLARY DAMAGES;
+   b. LOSS OF PROFITS, REVENUE, BUSINESS, GOODWILL, OR ANTICIPATED SAVINGS;
+   c. LOSS OF DATA OR DATA CORRUPTION;
+   d. COST OF PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+   e. BUSINESS INTERRUPTION OR LOSS OF USE;
+
+ARISING OUT OF OR RELATED TO THIS LICENSE, THE SOFTWARE, SOURCE CODE, COMPILED DERIVATIVES, OR THE LICENSEE'S USE OR INABILITY TO USE THE SAME, WHETHER BASED ON WARRANTY, CONTRACT, TORT (INCLUDING NEGLIGENCE), STRICT LIABILITY, OR ANY OTHER LEGAL THEORY, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+11.2 Cap on Liability
+IN NO EVENT SHALL THE TOTAL AGGREGATE LIABILITY OF PIXELATED DREAM / RAVEN STUDIOS UNDER THIS LICENSE EXCEED THE AMOUNT ACTUALLY PAID BY THE LICENSEE FOR THE SOFTWARE, OR ONE HUNDRED UNITED STATES DOLLARS ($100.00), WHICHEVER IS LESS.
+
+11.3 Essential Purpose
+THE LIMITATIONS SET FORTH IN THIS SECTION SHALL APPLY EVEN IF ANY LIMITED REMEDY PROVIDED HEREIN FAILS OF ITS ESSENTIAL PURPOSE.
+
+11.4 Jurisdictional Limitations
+SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR LIMITATION OF CERTAIN DAMAGES. IN SUCH JURISDICTIONS, THE LIABILITY OF PIXELATED DREAM / RAVEN STUDIOS SHALL BE LIMITED TO THE MAXIMUM EXTENT PERMITTED BY LAW.
+
+================================================================================
+SECTION 12: GOVERNING LAW AND VENUE
+================================================================================
+
+12.1 Governing Law
+This License shall be governed by, construed, and enforced in accordance with the laws of the United States of America and the State of incorporation of Pixelated Dream, without regard to its conflict of laws principles or the United Nations Convention on Contracts for the International Sale of Goods.
+
+12.2 Exclusive Jurisdiction
+The Licensee irrevocably consents and submits to the exclusive personal jurisdiction of the state and federal courts located within the State of incorporation of Pixelated Dream for any action, suit, or proceeding arising out of or related to this License.
+
+12.3 Exclusive Venue
+Any legal action, suit, or proceeding arising out of or related to this License shall be brought exclusively in the state or federal courts located within the State of incorporation of Pixelated Dream, and the Licensee hereby waives any objection to venue in such courts, including any claim of inconvenient forum.
+
+12.4 Waiver of Jury Trial
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE LICENSEE HEREBY WAIVES ANY RIGHT TO A JURY TRIAL IN ANY ACTION, SUIT, OR PROCEEDING ARISING OUT OF OR RELATED TO THIS LICENSE.
+
+12.5 Injunctive Relief
+The Licensee acknowledges that any breach of this License may cause irreparable harm to Pixelated Dream / Raven Studios for which monetary damages would be inadequate. Accordingly, Pixelated Dream / Raven Studios shall be entitled to seek injunctive or other equitable relief without the necessity of proving actual damages or posting bond.
+
+================================================================================
+SECTION 13: SEVERABILITY
+================================================================================
+
+13.1 Severability
+If any provision of this License is held by a court of competent jurisdiction to be invalid, illegal, or unenforceable, such provision shall be modified to the minimum extent necessary to make it valid, legal, and enforceable while preserving the original intent of the parties. If such modification is not possible, the provision shall be severed from this License.
+
+13.2 Remaining Provisions
+The invalidity, illegality, or unenforceability of any provision shall not affect the validity, legality, or enforceability of the remaining provisions of this License, which shall remain in full force and effect.
+
+13.3 Reformation
+If any provision is deemed overly broad or restrictive, the court is authorized and instructed to reform such provision to the maximum extent enforceable under applicable law.
+
+================================================================================
+SECTION 14: MISCELLANEOUS
+================================================================================
+
+14.1 Entire Agreement
+This License constitutes the entire agreement between the parties with respect to the subject matter hereof and supersedes all prior or contemporaneous understandings, agreements, negotiations, representations, and warranties, whether written or oral, relating to such subject matter.
+
+14.2 Amendments
+This License may not be amended, modified, or supplemented except by a written instrument signed by an authorized representative of Pixelated Dream / Raven Studios. No course of dealing or usage of trade shall be used to modify this License.
+
+14.3 Headings
+The section headings in this License are for convenience only and shall not affect the interpretation of this License.
+
+14.4 Language
+This License is drafted in the English language. In the event of any conflict between the English version and any translation, the English version shall prevail.
+
+14.5 Notices
+Any notice required or permitted under this License shall be in writing and shall be deemed given when delivered personally, sent by confirmed email, or sent by certified mail, return receipt requested, to the address specified by Pixelated Dream / Raven Studios.
+
+14.6 Independent Contractors
+The parties are independent contractors. Nothing in this License shall be construed to create a partnership, joint venture, agency, or employment relationship between the parties.
+
+14.7 No Third-Party Beneficiaries
+This License is for the sole benefit of the parties hereto and their respective successors and permitted assigns. Nothing in this License shall confer upon any third party any legal or equitable right, benefit, or remedy.
+
+14.8 Export Compliance
+The Licensee agrees to comply with all applicable export laws and regulations of the United States and other applicable jurisdictions in connection with the use of the Software.
+
+================================================================================
+END OF LICENSE
+================================================================================
+
+For questions regarding this License, contact: <legal@pixelateddream.com>
+
+© 2026 Pixelated Dream / Raven Studios. All rights reserved.
