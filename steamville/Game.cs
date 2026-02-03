@@ -3,8 +3,6 @@ using SFML.Graphics;
 using SFML.System;
 using Crucible.Graphics;
 
-namespace Crucible
-{
     public class Game : IDisposable
     {
         private readonly GraphicsCore _graphics;
@@ -21,6 +19,9 @@ namespace Crucible
                 FillColor = Color.White,
                 Position = new Vector2f(100, 100)
             };
+
+            _graphics.SetBackgroundColor(new Color(149, 0, 255)); // Dark blue background
+
         }
 
         public void Run()
@@ -50,4 +51,4 @@ namespace Crucible
             game.Run();
         }
     }
-}
+
