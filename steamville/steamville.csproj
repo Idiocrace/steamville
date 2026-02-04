@@ -5,9 +5,6 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    
-    <!-- Store dependencies in Libs subdirectory -->
-    <ProbesPaths>Libs</ProbesPaths>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,13 +12,16 @@
     <PackageReference Include="DiscordRichPresence" Version="1.6.1.70" />
   </ItemGroup>
 
-  <!-- Copy dependencies to Libs folder after build -->
-  <Target Name="CopyDependenciesToLibs" AfterTargets="Build">
-    <ItemGroup>
-      <DependencyFiles Include="$(OutputPath)*.dll" Exclude="$(OutputPath)$(AssemblyName).dll" />
-    </ItemGroup>
-    <MakeDir Directories="$(OutputPath)Libs" />
-    <Move SourceFiles="@(DependencyFiles)" DestinationFolder="$(OutputPath)Libs" OverwriteReadOnlyFiles="true" />
-  </Target>
+  <!-- macOS -->
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('OSX'))">
+    <RuntimeIdentifier>osx-x64</RuntimeIdentifier> <!-- or osx-arm64 -->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <!-- Windows -->
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
 
 </Project>
