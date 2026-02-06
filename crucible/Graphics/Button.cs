@@ -6,15 +6,17 @@ namespace Crucible.Graphics
 {
     public class Button : IDisposable
     {
-        public RectangleShape Shape { get; }
+        public RoundedRectangleShape Shape { get; }
         public Text TextObject { get; }
 
         public Color NormalColor { get; set; }
         public Color HoverColor { get; set; }
 
-        public Button(Font font, string text, Vector2f position, Vector2f size)
+        private bool _wasPressed = false; // Track previous mouse state
+
+        public Button(Font font, string text, Vector2f position, Vector2f size, uint radius, uint cornerPointCount)
         {
-            Shape = new RectangleShape(size)
+            Shape = new RoundedRectangleShape(size, radius, cornerPointCount)
             {
                 Position = position,
                 FillColor = Color.Blue
@@ -30,22 +32,41 @@ namespace Crucible.Graphics
             HoverColor = Color.Cyan;
         }
 
-        // Returns true if left mouse button clicked inside this button
-// Returns true if left mouse button clicked inside this button
+        // Returns true only on the frame when button is clicked (not held)
         public bool IsClicked(RenderWindow window)
         {
-            if (Mouse.IsButtonPressed(Mouse.Button.Left))
-            {
-                var mousePos = (Vector2f)Mouse.GetPosition(window); // get mouse relative to window
-                FloatRect bounds = Shape.GetGlobalBounds();
-                if (bounds.Contains(mousePos)) // <-- Pass Vector2f, not two floats
-                {
-                    return true;
-                }
-            }
-            return false;
+            bool isPressed = Mouse.IsButtonPressed(Mouse.Button.Left);
+            var mousePos = (Vector2f)Mouse.GetPosition(window);
+            FloatRect bounds = Shape.GetGlobalBounds();
+            bool isInside = bounds.Contains(mousePos);
+
+            // Detect click: mouse was not pressed last frame, is pressed now, and is inside button
+            bool clicked = !_wasPressed && isPressed && isInside;
+            _wasPressed = isPressed;
+
+            return clicked;
         }
 
+        public void UpdateHover(RenderWindow window)
+        {
+            var mousePos = (Vector2f)Mouse.GetPosition(window);
+            FloatRect bounds = Shape.GetGlobalBounds();
+            
+            if (bounds.Contains(mousePos))
+            {
+                Shape.FillColor = HoverColor;
+            }
+            else
+            {
+                Shape.FillColor = NormalColor;
+            }
+        }
+
+        public void Draw(RenderWindow window)
+        {
+            window.Draw(Shape);
+            window.Draw(TextObject);
+        }
 
         public void Dispose()
         {
