@@ -4,6 +4,7 @@ using System;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
+using Crucible.Types;
 
 namespace Crucible.Graphics;
 
@@ -27,7 +28,8 @@ public sealed class GraphicsCore : IDisposable
     private const uint DefaultWidth = 800;
     private const uint DefaultHeight = 600;
     private const uint DefaultFramerateLimit = 60;
-    private const string DefaultWindowTitle = "SteamVille";
+    private Color _defaultBackgroundColor = Color.Black; // default
+    private const string DefaultWindowTitle = "Crucible Game";
     private const string PrimaryFontPath = "bcp/assets/font_a.ttf";
     private const string FallbackFontPath = "/System/Library/Fonts/Supplemental/Arial.ttf";
 
@@ -49,6 +51,7 @@ public sealed class GraphicsCore : IDisposable
     /// Gets the font used for rendering text.
     /// </summary>
     public Font GameFont { get; private set; } = null!;
+    
 
     /// <summary>
     /// Gets the current game state.
@@ -162,8 +165,8 @@ public sealed class GraphicsCore : IDisposable
     private void InitializeView(uint width, uint height)
     {
         var viewRect = new FloatRect(
-            new Vector2f(0f, 0f),
-            new Vector2f(width, height)
+            new SFML.System.Vector2f(0f, 0f),
+            new SFML.System.Vector2f(width, height)
         );
         GameView = new View(viewRect);
     }
@@ -227,8 +230,8 @@ public sealed class GraphicsCore : IDisposable
         // Update the view to match the new window size
         // SizeEventArgs.Size is a Vector2u
         var newViewRect = new FloatRect(
-            new Vector2f(0f, 0f),
-            new Vector2f(e.Size.X, e.Size.Y)
+            new SFML.System.Vector2f(0f, 0f),
+            new SFML.System.Vector2f(e.Size.X, e.Size.Y)
         );
         GameView = new View(newViewRect);
         
@@ -276,13 +279,17 @@ public sealed class GraphicsCore : IDisposable
     public void BeginFrame()
     {
         ThrowIfDisposed();
-
-        var clearColor = CurrentState == GameState.MainMenu
-            ? new Color(20, 30, 50)
-            : Color.Cyan;
-
-        GameWindow.Clear(clearColor);
+        GameWindow.Clear(_defaultBackgroundColor);
     }
+    /// <summary>
+    /// Sets the background color for clearing the window.
+    /// </summary>
+    public void SetBackgroundColor(Color color)
+    {
+        ThrowIfDisposed();
+        _defaultBackgroundColor = color;
+    }
+
 
     /// <summary>
     /// Displays the rendered frame to the window.
@@ -300,7 +307,7 @@ public sealed class GraphicsCore : IDisposable
     /// <param name="text">The text object to draw.</param>
     /// <exception cref="ArgumentNullException">Thrown when text is null.</exception>
     /// <exception cref="ObjectDisposedException">Thrown if called after disposal.</exception>
-    public void DrawText(Text text)
+    public void DrawText(Text text) 
     {
         ThrowIfDisposed();
         
@@ -309,6 +316,52 @@ public sealed class GraphicsCore : IDisposable
 
         GameWindow.Draw(text);
     }
+
+    public void DrawShape(Shape shape)
+    {
+        ThrowIfDisposed();
+
+        if (shape == null)
+            throw new ArgumentNullException(nameof(shape));
+
+        GameWindow.Draw(shape);
+    }
+
+    /// <summary>
+    /// Draws a button composed of a shape and text.
+    /// </summary>
+    /// <param name="shape">The shape representing the button's visual form.</param>
+    /// <param name="text">The text to be displayed on the button.</param>
+    /// <exception cref="ArgumentNullException">Thrown when either shape or text is null.</exception>
+    /// <exception cref="ObjectDisposedException">Thrown if called after disposal.</exception>
+    public bool DrawButton(Button button)
+    {
+        ThrowIfDisposed();
+
+        if (button == null)
+            throw new ArgumentNullException(nameof(button));
+
+        // Draw visuals
+        GameWindow.Draw(button.Shape);
+        GameWindow.Draw(button.TextObject);
+
+        // --- INPUT LOGIC (what makes this a REAL button) ---
+        var mousePos = Mouse.GetPosition(GameWindow);
+        var mouseWorld = GameWindow.MapPixelToCoords(mousePos);
+
+        // Fix: Pass Vector2f instead of two separate floats
+        bool hovered = button.Shape.GetGlobalBounds().Contains(mouseWorld);
+        bool clicked = hovered && Mouse.IsButtonPressed(Mouse.Button.Left);
+
+        // Hover effect
+        if (hovered)
+            button.Shape.FillColor = button.HoverColor;
+        else
+            button.Shape.FillColor = button.NormalColor;
+
+        return clicked;
+    }
+
 
     #endregion
 

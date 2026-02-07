@@ -5,9 +5,6 @@ using System;
 
 namespace Crucible.Graphics;
 
-/// <summary>
-/// Handles rendering of game objects and UI elements.
-/// </summary>
 public class GameRenderer : IDisposable
 {
     private readonly GraphicsCore _graphics;
@@ -28,12 +25,6 @@ public class GameRenderer : IDisposable
     {
         _graphics = graphics ?? throw new ArgumentNullException(nameof(graphics));
         
-        // Initialize reusable text object
-        // Correct order: Text(Font, string, uint)
-        _testText = new Text(_graphics.GameFont, "Test Text", DefaultFontSize)
-        {
-            FillColor = Color.White
-        };
     }
 
     /// <summary>
