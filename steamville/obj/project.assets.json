@@ -542,22 +542,21 @@
         }
       }
     },
-    "net9.0/osx-x64": {
+    "net9.0/win-x64": {
       "CSFML/3.0.0": {
         "type": "package",
         "native": {
-          "runtimes/osx-x64/native/libcsfml-audio.3.0.dylib": {},
-          "runtimes/osx-x64/native/libcsfml-audio.dylib": {},
-          "runtimes/osx-x64/native/libcsfml-graphics.3.0.dylib": {},
-          "runtimes/osx-x64/native/libcsfml-graphics.dylib": {},
-          "runtimes/osx-x64/native/libcsfml-system.3.0.dylib": {},
-          "runtimes/osx-x64/native/libcsfml-system.dylib": {},
-          "runtimes/osx-x64/native/libcsfml-window.3.0.dylib": {},
-          "runtimes/osx-x64/native/libcsfml-window.dylib": {},
-          "runtimes/osx-x64/native/libsfml-audio.3.0.dylib": {},
-          "runtimes/osx-x64/native/libsfml-graphics.3.0.dylib": {},
-          "runtimes/osx-x64/native/libsfml-system.3.0.dylib": {},
-          "runtimes/osx-x64/native/libsfml-window.3.0.dylib": {}
+          "runtimes/win-x64/native/csfml-audio.dll": {},
+          "runtimes/win-x64/native/csfml-graphics.dll": {},
+          "runtimes/win-x64/native/csfml-system.dll": {},
+          "runtimes/win-x64/native/csfml-window.dll": {},
+          "runtimes/win-x64/native/msvcp140.dll": {},
+          "runtimes/win-x64/native/sfml-audio-3.dll": {},
+          "runtimes/win-x64/native/sfml-graphics-3.dll": {},
+          "runtimes/win-x64/native/sfml-system-3.dll": {},
+          "runtimes/win-x64/native/sfml-window-3.dll": {},
+          "runtimes/win-x64/native/vcruntime140.dll": {},
+          "runtimes/win-x64/native/vcruntime140_1.dll": {}
         },
         "build": {
           "build/netstandard2.0/_._": {}
@@ -928,8 +927,8 @@
     },
     "TileEngine/0.1.0": {
       "type": "project",
-      "path": "../Crucible/Crucible.csproj",
-      "msbuildProject": "../Crucible/Crucible.csproj"
+      "path": "../crucible/Crucible.csproj",
+      "msbuildProject": "../crucible/Crucible.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -939,32 +938,40 @@
     ]
   },
   "packageFolders": {
-    "/Users/theodorecromwell/.nuget/packages/": {}
+    "C:\\Users\\Harvey Jass\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/theodorecromwell/Documents/Coding/steamville/steamville/steamville.csproj",
+      "projectUniqueName": "C:\\Users\\Harvey Jass\\Downloads\\steamville\\steamville\\steamville.csproj",
       "projectName": "steamville",
-      "projectPath": "/Users/theodorecromwell/Documents/Coding/steamville/steamville/steamville.csproj",
-      "packagesPath": "/Users/theodorecromwell/.nuget/packages/",
-      "outputPath": "/Users/theodorecromwell/Documents/Coding/steamville/steamville/obj/",
+      "projectPath": "C:\\Users\\Harvey Jass\\Downloads\\steamville\\steamville\\steamville.csproj",
+      "packagesPath": "C:\\Users\\Harvey Jass\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Harvey Jass\\Downloads\\steamville\\steamville\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/Users/theodorecromwell/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Harvey Jass\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "/Users/theodorecromwell/Documents/Coding/steamville/Crucible/Crucible.csproj": {
-              "projectPath": "/Users/theodorecromwell/Documents/Coding/steamville/Crucible/Crucible.csproj"
+            "C:\\Users\\Harvey Jass\\Downloads\\steamville\\crucible\\Crucible.csproj": {
+              "projectPath": "C:\\Users\\Harvey Jass\\Downloads\\steamville\\crucible\\Crucible.csproj"
             }
           }
         }
@@ -1006,11 +1013,11 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.310/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
       }
     },
     "runtimes": {
-      "osx-x64": {
+      "win-x64": {
         "#import": []
       }
     }

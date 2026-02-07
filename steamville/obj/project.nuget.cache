@@ -1,17 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "iepGBQ+BThA=",
+  "dgSpecHash": "E8fgBfiujIA=",
   "success": true,
-  "projectFilePath": "/Users/theodorecromwell/Documents/Coding/steamville/steamville/steamville.csproj",
+  "projectFilePath": "C:\\Users\\Harvey Jass\\Downloads\\steamville\\steamville\\steamville.csproj",
   "expectedPackageFiles": [
-    "/Users/theodorecromwell/.nuget/packages/csfml/3.0.0/csfml.3.0.0.nupkg.sha512",
-    "/Users/theodorecromwell/.nuget/packages/discordrichpresence/1.6.1.70/discordrichpresence.1.6.1.70.nupkg.sha512",
-    "/Users/theodorecromwell/.nuget/packages/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg.sha512",
-    "/Users/theodorecromwell/.nuget/packages/sfml.audio/3.0.0/sfml.audio.3.0.0.nupkg.sha512",
-    "/Users/theodorecromwell/.nuget/packages/sfml.graphics/3.0.0/sfml.graphics.3.0.0.nupkg.sha512",
-    "/Users/theodorecromwell/.nuget/packages/sfml.net/3.0.0/sfml.net.3.0.0.nupkg.sha512",
-    "/Users/theodorecromwell/.nuget/packages/sfml.system/3.0.0/sfml.system.3.0.0.nupkg.sha512",
-    "/Users/theodorecromwell/.nuget/packages/sfml.window/3.0.0/sfml.window.3.0.0.nupkg.sha512"
+    "C:\\Users\\Harvey Jass\\.nuget\\packages\\csfml\\3.0.0\\csfml.3.0.0.nupkg.sha512",
+    "C:\\Users\\Harvey Jass\\.nuget\\packages\\discordrichpresence\\1.6.1.70\\discordrichpresence.1.6.1.70.nupkg.sha512",
+    "C:\\Users\\Harvey Jass\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\Harvey Jass\\.nuget\\packages\\sfml.audio\\3.0.0\\sfml.audio.3.0.0.nupkg.sha512",
+    "C:\\Users\\Harvey Jass\\.nuget\\packages\\sfml.graphics\\3.0.0\\sfml.graphics.3.0.0.nupkg.sha512",
+    "C:\\Users\\Harvey Jass\\.nuget\\packages\\sfml.net\\3.0.0\\sfml.net.3.0.0.nupkg.sha512",
+    "C:\\Users\\Harvey Jass\\.nuget\\packages\\sfml.system\\3.0.0\\sfml.system.3.0.0.nupkg.sha512",
+    "C:\\Users\\Harvey Jass\\.nuget\\packages\\sfml.window\\3.0.0\\sfml.window.3.0.0.nupkg.sha512"
   ],
   "logs": []
 }
