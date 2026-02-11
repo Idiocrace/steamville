@@ -317,6 +317,39 @@ public sealed class GraphicsCore : IDisposable
         GameWindow.Draw(text);
     }
 
+    public void UpdateText(Text text, string? content = null, SFML.System.Vector2f? position = null, Color? color = null, Font? font = null)
+    {
+        ThrowIfDisposed();
+
+        if (text == null)
+            throw new ArgumentNullException(nameof(text));
+
+        if (font != null)
+            text.Font = font;
+
+        if (color.HasValue)
+            text.FillColor = color.Value;
+
+        if (content != null)
+            text.DisplayedString = content;
+        
+        if (position.HasValue)
+            text.Position = position.Value;
+    }
+
+
+
+    public void TrashItem(IDisposable item)
+    {
+        ThrowIfDisposed();
+        
+        if (item == null)
+            throw new ArgumentNullException(nameof(item), "Cannot trash a null item.");
+
+        item.Dispose();
+    }
+
+    
     public void DrawShape(Shape shape)
     {
         ThrowIfDisposed();
@@ -345,7 +378,6 @@ public sealed class GraphicsCore : IDisposable
         GameWindow.Draw(button.Shape);
         GameWindow.Draw(button.TextObject);
 
-        // --- INPUT LOGIC (what makes this a REAL button) ---
         var mousePos = Mouse.GetPosition(GameWindow);
         var mouseWorld = GameWindow.MapPixelToCoords(mousePos);
 

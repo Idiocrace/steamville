@@ -8,7 +8,6 @@ namespace Crucible.Graphics;
 public class GameRenderer : IDisposable
 {
     private readonly GraphicsCore _graphics;
-    private readonly Text _testText;
     private bool _disposed;
     
     // Configuration constants
@@ -37,11 +36,7 @@ public class GameRenderer : IDisposable
         
         // Apply game view transformation for world-space rendering
         _graphics.GameWindow.SetView(_graphics.GameView);
-        
-        // Center text horizontally with offset
-        _testText.Position = CalculateTextPosition();
-        
-        _graphics.DrawText(_testText);
+    
     }
 
     /// <summary>
@@ -67,7 +62,6 @@ public class GameRenderer : IDisposable
         if (text == null)
             throw new ArgumentNullException(nameof(text));
             
-        _testText.DisplayedString = text;
     }
 
     /// <summary>
@@ -78,7 +72,6 @@ public class GameRenderer : IDisposable
     public void UpdateTextColor(Color color)
     {
         ThrowIfDisposed();
-        _testText.FillColor = color;
     }
 
     private void ThrowIfDisposed()
@@ -108,7 +101,6 @@ public class GameRenderer : IDisposable
         if (disposing)
         {
             // Dispose managed resources
-            _testText?.Dispose();
         }
 
         _disposed = true;
