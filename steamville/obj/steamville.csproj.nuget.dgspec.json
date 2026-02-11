@@ -1,32 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Harvey Jass\\Downloads\\steamville\\steamville\\steamville.csproj": {}
+    "/Users/theodorecromwell/Documents/Coding/steamville/steamville/steamville.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Harvey Jass\\Downloads\\steamville\\crucible\\Crucible.csproj": {
+    "/Users/theodorecromwell/Documents/Coding/steamville/crucible/Crucible.csproj": {
       "version": "0.1.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Harvey Jass\\Downloads\\steamville\\crucible\\Crucible.csproj",
+        "projectUniqueName": "/Users/theodorecromwell/Documents/Coding/steamville/crucible/Crucible.csproj",
         "projectName": "TileEngine",
-        "projectPath": "C:\\Users\\Harvey Jass\\Downloads\\steamville\\crucible\\Crucible.csproj",
-        "packagesPath": "C:\\Users\\Harvey Jass\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Harvey Jass\\Downloads\\steamville\\crucible\\obj\\",
+        "projectPath": "/Users/theodorecromwell/Documents/Coding/steamville/crucible/Crucible.csproj",
+        "packagesPath": "/Users/theodorecromwell/.nuget/packages/",
+        "outputPath": "/Users/theodorecromwell/Documents/Coding/steamville/crucible/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Harvey Jass\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/theodorecromwell/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -72,41 +65,34 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.310/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Harvey Jass\\Downloads\\steamville\\steamville\\steamville.csproj": {
+    "/Users/theodorecromwell/Documents/Coding/steamville/steamville/steamville.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Harvey Jass\\Downloads\\steamville\\steamville\\steamville.csproj",
+        "projectUniqueName": "/Users/theodorecromwell/Documents/Coding/steamville/steamville/steamville.csproj",
         "projectName": "steamville",
-        "projectPath": "C:\\Users\\Harvey Jass\\Downloads\\steamville\\steamville\\steamville.csproj",
-        "packagesPath": "C:\\Users\\Harvey Jass\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Harvey Jass\\Downloads\\steamville\\steamville\\obj\\",
+        "projectPath": "/Users/theodorecromwell/Documents/Coding/steamville/steamville/steamville.csproj",
+        "packagesPath": "/Users/theodorecromwell/.nuget/packages/",
+        "outputPath": "/Users/theodorecromwell/Documents/Coding/steamville/steamville/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Harvey Jass\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/theodorecromwell/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\Harvey Jass\\Downloads\\steamville\\crucible\\Crucible.csproj": {
-                "projectPath": "C:\\Users\\Harvey Jass\\Downloads\\steamville\\crucible\\Crucible.csproj"
+              "/Users/theodorecromwell/Documents/Coding/steamville/crucible/Crucible.csproj": {
+                "projectPath": "/Users/theodorecromwell/Documents/Coding/steamville/crucible/Crucible.csproj"
               }
             }
           }
@@ -148,11 +134,11 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.310/PortableRuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {
-        "win-x64": {
+        "osx-x64": {
           "#import": []
         }
       }

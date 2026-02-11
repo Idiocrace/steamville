@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("steamville")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+33b5410c48f79e55ccc8a07226d565239e62ba0b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+43df31d2d51144a8bb4eeeeddef067656665dbee")]
 [assembly: System.Reflection.AssemblyProductAttribute("steamville")]
 [assembly: System.Reflection.AssemblyTitleAttribute("steamville")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
