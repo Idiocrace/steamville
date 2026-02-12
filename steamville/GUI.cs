@@ -8,7 +8,7 @@ public sealed class GUI : IDisposable
     private readonly GraphicsCore _graphics;
     private readonly Text _welcomeText;
     private Text testText;
-    private readonly RectangleShape _rectangle;
+    private  RectangleShape _rectangle;
     private readonly Button _testButton;
     private bool _disposed;
     private bool _updateTime;
@@ -18,6 +18,8 @@ public sealed class GUI : IDisposable
     public GUI()
     {
         _graphics = new GraphicsCore(800, 600, "Crucible Game", 60);
+
+        _graphics.hushDisposal(); // Suppress disposal message for testing
 
         _welcomeText = new Text(_graphics.GameFont, "Welcome to Crucible!", 30)
         {
@@ -53,7 +55,6 @@ public sealed class GUI : IDisposable
         // Check if button is clicked
         if (_testButton.IsClicked(_graphics.GameWindow))
         {
-            Console.WriteLine("Button was clicked!");
             _updateTime = !_updateTime;
 
             // Ensure that this null item cannot be trashed
@@ -61,6 +62,11 @@ public sealed class GUI : IDisposable
             {
                 _graphics.TrashItem(testText);
                 testText = null;
+            }
+            if (_rectangle != null)
+            {
+                _graphics.TrashItem(_rectangle);
+                _rectangle = null;
             }
         }
     }
@@ -116,10 +122,10 @@ public sealed class GUI : IDisposable
 
         _disposed = true;
 
-        _welcomeText.Dispose();
-        testText?.Dispose(); // Safe disposal - only if not already trashed
-        _rectangle.Dispose();
-        _testButton.Dispose();
+        _welcomeText?.Dispose();
+        testText?.Dispose(); // Disposal only if not already trashed
+        _rectangle?.Dispose();
+        _testButton?.Dispose();
         _graphics.Dispose();
     }
 }

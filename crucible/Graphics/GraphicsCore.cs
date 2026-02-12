@@ -30,8 +30,8 @@ public sealed class GraphicsCore : IDisposable
     private const uint DefaultFramerateLimit = 60;
     private Color _defaultBackgroundColor = Color.Black; // default
     private const string DefaultWindowTitle = "Crucible Game";
-    private const string PrimaryFontPath = "bcp/assets/font_a.ttf";
-    private const string FallbackFontPath = "/System/Library/Fonts/Supplemental/Arial.ttf";
+    private const string PrimaryFontPath = "C:/Windows/Fonts/arial.ttf"; // Windows Arial font path
+    private const string FallbackFontPath = "/System/Library/Fonts/Supplemental/Arial.ttf"; // macOS Arial font path
 
     #endregion
 
@@ -78,6 +78,8 @@ public sealed class GraphicsCore : IDisposable
     /// Gets whether the graphics system is running.
     /// </summary>
     public bool IsRunning => GameWindow?.IsOpen ?? false;
+
+    public string disposalMessage = "GraphicsCore disposed.";
 
     /// <summary>
     /// Gets the current mouse position relative to the window.
@@ -418,6 +420,10 @@ public sealed class GraphicsCore : IDisposable
         GC.SuppressFinalize(this);
     }
 
+    public void hushDisposal()
+    {
+        disposalMessage = string.Empty;
+    }
     /// <summary>
     /// Releases unmanaged and optionally managed resources.
     /// </summary>
@@ -441,7 +447,7 @@ public sealed class GraphicsCore : IDisposable
             GameFont?.Dispose();
             GameWindow?.Dispose();
 
-            Console.WriteLine("GraphicsCore disposed.");
+            Console.WriteLine(disposalMessage);
         }
 
         _disposed = true;
